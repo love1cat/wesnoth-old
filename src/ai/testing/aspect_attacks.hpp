@@ -53,7 +53,7 @@ public:
     
     inline const config& get_filter_own() const {return filter_own_;}
     inline const config& get_filter_enemy() const {return filter_enemy_;}
-    inline const config& get_analysis_strategy_cfg() const {return analysis_strategy_cfg_;}
+    inline const config& get_analysis_strategy_cfg() const {return target_analysis_strategy_cfg_;}
     
     virtual target_analysis_strategy_ptr get_default_strategy() const;
     
@@ -64,7 +64,7 @@ protected:
     
 	config filter_own_;
 	config filter_enemy_;
-    config analysis_strategy_cfg_;
+    config target_analysis_strategy_cfg_;
 };
 
 
