@@ -44,7 +44,11 @@ aspect_attacks::aspect_attacks(readonly_context &context, const config &cfg, con
 	: typesafe_aspect<attacks_vector>(context,cfg,id)
 	, filter_own_()
 	, filter_enemy_()
+<<<<<<< HEAD
 	, target_analysis_strategy_cfg_()
+=======
+    , target_analysis_strategy_cfg_()
+>>>>>>> AI variant improvement - attack analysis strategy is now bound
 {
 	if (const config &filter_own = cfg.child("filter_own")) {
 		filter_own_ = filter_own;
@@ -58,13 +62,11 @@ aspect_attacks::aspect_attacks(readonly_context &context, const config &cfg, con
 		set_strategy_from_config(target_analysis_strategy_cfg);
 	}
 =======
-    if (const config &analysis_strategy_cfg = cfg.child("analysis_strategy")){
-        analysis_strategy_cfg_ = analysis_strategy_cfg;
-        if(const config &target_analysis_strategy_cfg = analysis_strategy_cfg.child("target_analysis_strategy")){
-            set_strategy_from_config(target_analysis_strategy_cfg);
-        }
+    if (const config &target_analysis_strategy_cfg = cfg.child("target_analysis_strategy")){
+        target_analysis_strategy_cfg_ = target_analysis_strategy_cfg;
+        set_strategy_from_config(target_analysis_strategy_cfg);
     }
->>>>>>> AI varaint is implemented based on master 1.11.4
+>>>>>>> AI variant improvement - attack analysis strategy is now bound
 }
 
 aspect_attacks::~aspect_attacks()
@@ -79,13 +81,8 @@ void aspect_attacks::recalculate() const
 
 boost::shared_ptr<attacks_vector> aspect_attacks::analyze_targets() const
 {
-<<<<<<< HEAD
 	LOG_AI<<"current target analysis strategy is: "<<get_strategy()->get_id()<<std::endl;
 	return get_strategy()->analyze_targets_impl(*this);
-=======
-    LOG_AI<<"current target analysis strategy is: "<<get_strategy()->get_id()<<std::endl;
-    return get_strategy()->analyze_targets_impl(*this);
->>>>>>> AI varaint is implemented based on master 1.11.4
 }
 
 
@@ -100,12 +97,16 @@ config aspect_attacks::to_config() const
 	}
 <<<<<<< HEAD
 	if (!target_analysis_strategy_cfg_.empty()) {
+=======
+    if (!target_analysis_strategy_cfg_.empty()) {
+>>>>>>> AI variant improvement - attack analysis strategy is now bound
 		cfg.add_child("target_analysis_strategy",target_analysis_strategy_cfg_);
 	}
 	return cfg;
 }
 	
 aspect_attacks::target_analysis_strategy_ptr aspect_attacks::get_default_strategy() const{
+<<<<<<< HEAD
 	LOG_AI << "default target analysis strategy is applied" << std::endl;
 	// set default analysis strategy
 	return target_analysis_strategy_ptr(new target_analysis_strategy1(target_analysis_strategy_cfg_));
@@ -130,16 +131,9 @@ void aspect_attacks::set_strategy_from_config(const config& target_analysis_stra
 		}
 	}
 =======
-    if (!analysis_strategy_cfg_.empty()) {
-		cfg.add_child("analysis_strategy",analysis_strategy_cfg_);
-	}
-	return cfg;
-}
-    
-aspect_attacks::target_analysis_strategy_ptr aspect_attacks::get_default_strategy() const{
     LOG_AI << "default target analysis strategy is applied" << std::endl;
     // set default analysis strategy
-    return target_analysis_strategy_ptr(new target_analysis_strategy1());
+    return target_analysis_strategy_ptr(new target_analysis_strategy1(target_analysis_strategy_cfg_));
 }
 
 void aspect_attacks::set_strategy_from_config(const config& target_analysis_strategy_cfg){
@@ -147,7 +141,7 @@ void aspect_attacks::set_strategy_from_config(const config& target_analysis_stra
     if(target_analysis_strategy_cfg.has_attribute("name")){
         std::string stra_name = target_analysis_strategy_cfg["name"];
         if(stra_name == "strategy1"){
-            target_analysis_strategy_ptr stra_ptr= target_analysis_strategy_ptr(new target_analysis_strategy1());
+            target_analysis_strategy_ptr stra_ptr= target_analysis_strategy_ptr(new target_analysis_strategy1(target_analysis_strategy_cfg_));
             set_current_strategy(stra_ptr);
             LOG_AI << "target_analysis_strategy is set to " << stra_name << " by config" << std::endl;
         } //TODO: add new strategy (with different name attribute) in "else if" block
@@ -160,7 +154,7 @@ void aspect_attacks::set_strategy_from_config(const config& target_analysis_stra
             ERR_AI << "target_analysis_strategy tag has invalid 'name' attribute " << stra_name << std::endl;
         }
     }
->>>>>>> AI varaint is implemented based on master 1.11.4
+>>>>>>> AI variant improvement - attack analysis strategy is now bound
 }
 
 } // end of namespace testing_ai_default

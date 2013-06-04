@@ -38,13 +38,8 @@ namespace testing_ai_default {
 
 class aspect_attacks: public typesafe_aspect<attacks_vector>, public virtual analysis_strategy_component<target_analysis_strategy> {
 public:
-<<<<<<< HEAD
 	typedef analysis_strategy_component<target_analysis_strategy>::strategy_ptr target_analysis_strategy_ptr;
 	
-=======
-    typedef analysis_strategy_component<target_analysis_strategy>::strategy_ptr target_analysis_strategy_ptr;
-    
->>>>>>> AI varaint is implemented based on master 1.11.4
 	aspect_attacks(readonly_context &context, const config &cfg, const std::string &id);
 
 
@@ -64,30 +59,27 @@ public:
 	virtual target_analysis_strategy_ptr get_default_strategy() const;
 	
 	virtual void set_strategy_from_config(const config& target_analysis_strategy_cfg);
+=======
+    
+    inline const config& get_filter_own() const {return filter_own_;}
+    inline const config& get_filter_enemy() const {return filter_enemy_;}
+    inline const config& get_analysis_strategy_cfg() const {return target_analysis_strategy_cfg_;}
+    
+    virtual target_analysis_strategy_ptr get_default_strategy() const;
+    
+    virtual void set_strategy_from_config(const config& target_analysis_strategy_cfg);
+>>>>>>> AI variant improvement - attack analysis strategy is now bound
 
 protected:
 	boost::shared_ptr<attacks_vector> analyze_targets() const;
 	
 	config filter_own_;
 	config filter_enemy_;
+<<<<<<< HEAD
 	config target_analysis_strategy_cfg_;
 =======
-    
-    inline const config& get_filter_own() const {return filter_own_;}
-    inline const config& get_filter_enemy() const {return filter_enemy_;}
-    inline const config& get_analysis_strategy_cfg() const {return analysis_strategy_cfg_;}
-    
-    virtual target_analysis_strategy_ptr get_default_strategy() const;
-    
-    virtual void set_strategy_from_config(const config& target_analysis_strategy_cfg);
-
-protected:
-	boost::shared_ptr<attacks_vector> analyze_targets() const;
-    
-	config filter_own_;
-	config filter_enemy_;
-    config analysis_strategy_cfg_;
->>>>>>> AI varaint is implemented based on master 1.11.4
+    config target_analysis_strategy_cfg_;
+>>>>>>> AI variant improvement - attack analysis strategy is now bound
 };
 
 
