@@ -52,6 +52,8 @@ public:
         return concrete_strategy_ptr_;
     }
     
+    virtual ~analysis_strategy_component(){}
+    
 private:
     mutable strategy_ptr concrete_strategy_ptr_;
 };

@@ -80,6 +80,8 @@ public:
                                     used_location_map& used_locations,
                                     attack_analysis& cur_analysis,
                                     std::vector<attack_analysis>& result) const;
+    
+    virtual void set_default_attack_analysis_strategy(const config& target_anaysis_strategy_config);
 private:
     int target_number_;
     static const int MAX_TARGET_NUMBER = 3;

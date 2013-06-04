@@ -44,6 +44,7 @@ aspect_attacks::aspect_attacks(readonly_context &context, const config &cfg, con
 	: typesafe_aspect<attacks_vector>(context,cfg,id)
 	, filter_own_()
 	, filter_enemy_()
+    , target_analysis_strategy_cfg_()
 {
 	if (const config &filter_own = cfg.child("filter_own")) {
 		filter_own_ = filter_own;
@@ -51,11 +52,9 @@ aspect_attacks::aspect_attacks(readonly_context &context, const config &cfg, con
 	if (const config &filter_enemy = cfg.child("filter_enemy")) {
 		filter_enemy_ = filter_enemy;
 	}
-    if (const config &analysis_strategy_cfg = cfg.child("analysis_strategy")){
-        analysis_strategy_cfg_ = analysis_strategy_cfg;
-        if(const config &target_analysis_strategy_cfg = analysis_strategy_cfg.child("target_analysis_strategy")){
-            set_strategy_from_config(target_analysis_strategy_cfg);
-        }
+    if (const config &target_analysis_strategy_cfg = cfg.child("target_analysis_strategy")){
+        target_analysis_strategy_cfg_ = target_analysis_strategy_cfg;
+        set_strategy_from_config(target_analysis_strategy_cfg);
     }
 }
 
@@ -85,8 +84,8 @@ config aspect_attacks::to_config() const
 	if (!filter_enemy_.empty()) {
 		cfg.add_child("filter_enemy",filter_enemy_);
 	}
-    if (!analysis_strategy_cfg_.empty()) {
-		cfg.add_child("analysis_strategy",analysis_strategy_cfg_);
+    if (!target_analysis_strategy_cfg_.empty()) {
+		cfg.add_child("target_analysis_strategy",target_analysis_strategy_cfg_);
 	}
 	return cfg;
 }
@@ -94,7 +93,7 @@ config aspect_attacks::to_config() const
 aspect_attacks::target_analysis_strategy_ptr aspect_attacks::get_default_strategy() const{
     LOG_AI << "default target analysis strategy is applied" << std::endl;
     // set default analysis strategy
-    return target_analysis_strategy_ptr(new target_analysis_strategy1());
+    return target_analysis_strategy_ptr(new target_analysis_strategy1(target_analysis_strategy_cfg_));
 }
 
 void aspect_attacks::set_strategy_from_config(const config& target_analysis_strategy_cfg){
@@ -102,7 +101,7 @@ void aspect_attacks::set_strategy_from_config(const config& target_analysis_stra
     if(target_analysis_strategy_cfg.has_attribute("name")){
         std::string stra_name = target_analysis_strategy_cfg["name"];
         if(stra_name == "strategy1"){
-            target_analysis_strategy_ptr stra_ptr= target_analysis_strategy_ptr(new target_analysis_strategy1());
+            target_analysis_strategy_ptr stra_ptr= target_analysis_strategy_ptr(new target_analysis_strategy1(target_analysis_strategy_cfg_));
             set_current_strategy(stra_ptr);
             LOG_AI << "target_analysis_strategy is set to " << stra_name << " by config" << std::endl;
         } //TODO: add new strategy (with different name attribute) in "else if" block

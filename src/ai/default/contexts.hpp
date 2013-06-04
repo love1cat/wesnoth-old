@@ -140,6 +140,8 @@ public:
 	/** Is true if the units involved in this attack sequence are surrounded. */
 	bool is_surrounded;
     
+    //// multiple target attack analysis variables ////
+    
     // "movements_target_ids" saves "target id" associated
     // with the movement in "movements" in multiple target case.
     std::vector<int> movements_target_ids;
