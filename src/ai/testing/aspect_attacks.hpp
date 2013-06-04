@@ -23,6 +23,8 @@
 #include "../composite/aspect.hpp"
 #include "../interface.hpp"
 
+#include "target_analysis_strategy.hpp"
+
 #ifdef _MSC_VER
 #pragma warning(push)
 //silence "inherits via dominance" warnings
@@ -34,8 +36,10 @@ namespace ai {
 
 namespace testing_ai_default {
 
-class aspect_attacks: public typesafe_aspect<attacks_vector> {
+class aspect_attacks: public typesafe_aspect<attacks_vector>, public virtual analysis_strategy_component<target_analysis_strategy> {
 public:
+    typedef analysis_strategy_component<target_analysis_strategy>::strategy_ptr target_analysis_strategy_ptr;
+    
 	aspect_attacks(readonly_context &context, const config &cfg, const std::string &id);
 
 
@@ -46,23 +50,21 @@ public:
 
 
 	virtual config to_config() const;
-
+    
+    inline const config& get_filter_own() const {return filter_own_;}
+    inline const config& get_filter_enemy() const {return filter_enemy_;}
+    inline const config& get_analysis_strategy_cfg() const {return analysis_strategy_cfg_;}
+    
+    virtual target_analysis_strategy_ptr get_default_strategy() const;
+    
+    virtual void set_strategy_from_config(const config& target_analysis_strategy_cfg);
 
 protected:
 	boost::shared_ptr<attacks_vector> analyze_targets() const;
-
-	void do_attack_analysis(const map_location& loc,
-	                const move_map& srcdst, const move_map& dstsrc,
-			const move_map& fullmove_srcdst, const move_map& fullmove_dstsrc,
-	                const move_map& enemy_srcdst, const move_map& enemy_dstsrc,
-			const map_location* tiles, bool* used_locations,
-	                std::vector<map_location>& units,
-	                std::vector<attack_analysis>& result,
-			attack_analysis& cur_analysis,
-			 const team &current_team) const;
-	static int rate_terrain(const unit& u, const map_location& loc);
+    
 	config filter_own_;
 	config filter_enemy_;
+    config analysis_strategy_cfg_;
 };
 
 
