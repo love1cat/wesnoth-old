@@ -42,8 +42,19 @@ static lg::log_domain log_ai_testing_aspect_attacks("ai/aspect/attacks");
 #define ERR_AI LOG_STREAM(err, log_ai_testing_aspect_attacks)
 
 // terrain_analysis_strategy1 constructor, set default bonus values here
-target_analysis_strategy1::target_analysis_strategy1() {
+target_analysis_strategy1::target_analysis_strategy1(const config& cfg)
+    : target_analysis_strategy_cfg_(cfg)
+    , attack_analysis_strategy_cfg_(){
     set_id("target_analysis_strategy1");
+    set_default_attack_analysis_strategy(target_analysis_strategy_cfg_);
+}
+    
+void target_analysis_strategy1::set_default_attack_analysis_strategy(const config& target_anaysis_strategy_config){
+    if(const config &attack_analysis_strategy_cfg = target_anaysis_strategy_config.child("attack_analysis_strategy")){
+        attack_analysis_strategy_cfg_ = attack_analysis_strategy_cfg;
+        return;
+    }
+    attack_analysis_strategy_cfg_.child_or_add("attack_analysis_strategy")["name"]="strategy1";
 }
     
 boost::shared_ptr<attacks_vector> target_analysis_strategy1::analyze_targets_impl(const aspect_attacks& asp_atks) const{
@@ -74,9 +85,6 @@ boost::shared_ptr<attacks_vector> target_analysis_strategy1::analyze_targets_imp
     
     asp_atks.unit_stats_cache().clear();
     
-    // create the attack_analysis instance based on the analysis strategy from config in aspect_attack
-    const config& analysis_strategy_cfg = asp_atks.get_analysis_strategy_cfg();
-    
     for(unit_map::const_iterator j = units_.begin(); j != units_.end(); ++j) {
 		// Attack anyone who is on the enemy side,
 		// and who is not invisible or petrified.
@@ -89,13 +97,16 @@ boost::shared_ptr<attacks_vector> target_analysis_strategy1::analyze_targets_imp
 			map_location adjacent[6];
 			get_adjacent_tiles(j->get_location(), adjacent);
             
-			attack_analysis analysis(analysis_strategy_cfg);
+            // attack analysis is created based on the config retrieved from target_analysis_strategy_config or default
+            // see constructor and set_default_attack_analysis_strategy()
+			attack_analysis analysis(attack_analysis_strategy_cfg_);
+            
 			analysis.target = j->get_location();
 			analysis.vulnerability = 0.0;
 			analysis.support = 0.0;
 			do_attack_analysis(j->get_location(), srcdst, dstsrc,
                                fullmove_srcdst, fullmove_dstsrc, enemy_srcdst, enemy_dstsrc,
-                               adjacent,used_locations,unit_locs,*res,analysis, asp_atks.current_team(), &asp_atks);
+                               adjacent,asp_atks.current_team(), &asp_atks, used_locations,unit_locs,*res,analysis);
 		}
 	}
 	return res;
@@ -106,12 +117,13 @@ void target_analysis_strategy1::do_attack_analysis(
                                         const move_map& srcdst, const move_map& dstsrc,
                                         const move_map& fullmove_srcdst, const move_map& fullmove_dstsrc,
                                         const move_map& enemy_srcdst, const move_map& enemy_dstsrc,
-                                        const map_location* tiles, bool* used_locations,
+                                        const map_location* tiles, 
+                                        const team &current_team,
+                                        const readonly_context* ai_ptr,
+                                        bool* used_locations,
                                         std::vector<map_location>& units,
                                         std::vector<attack_analysis>& result,
-                                        attack_analysis& cur_analysis,
-                                        const team &current_team,
-                                        const readonly_context* ai_ptr
+                                        attack_analysis& cur_analysis
                                         ) const
 {
 	// This function is called fairly frequently, so interact with the user here.
@@ -328,8 +340,8 @@ void target_analysis_strategy1::do_attack_analysis(
 			result.push_back(cur_analysis);
 			used_locations[cur_position] = true;
 			do_attack_analysis(loc,srcdst,dstsrc,fullmove_srcdst,fullmove_dstsrc,enemy_srcdst,enemy_dstsrc,
-                               tiles,used_locations,
-                               units,result,cur_analysis, current_team, ai_ptr);
+                               tiles, current_team, ai_ptr, used_locations,
+                               units,result,cur_analysis);
 			used_locations[cur_position] = false;
             
             
