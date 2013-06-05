@@ -18,7 +18,7 @@
  */
 
 #include "../manager.hpp"
-#include "../../actions.hpp"
+#include "../../actions/attack.hpp"
 #include "../../log.hpp"
 #include "../../map.hpp"
 #include "../../team.hpp"
@@ -27,7 +27,7 @@
 #include "../../unit.hpp"
 #include "../../pathfind/pathfind.hpp"
 #include "aspect_attacks.hpp"
-#include "multiple_target_analysis_strategy.hpp"
+#include "multi_target_analysis_strategy.hpp"
 
 static lg::log_domain log_ai_testing_multi_target("ai/multi_target");
 #define DBG_AI LOG_STREAM(debug, log_ai_testing_multi_target)
@@ -38,8 +38,9 @@ namespace ai {
     
 namespace testing_ai_default {
 
-multiple_target_analysis_strategy::multiple_target_analysis_strategy(int target_number)
-    : target_number_(target_number){
+multi_target_analysis_strategy::multi_target_analysis_strategy(const config& target_analysis_strategy_cfg, size_t target_number)
+    : target_analysis_strategy1(target_analysis_strategy_cfg)
+    , target_number_(target_number){
     if(target_number > MAX_TARGET_NUMBER){
         LOG_AI<<"multiple target analysis can currently support not more than" << MAX_TARGET_NUMBER << "targets." << std::endl;
         target_number_ = MAX_TARGET_NUMBER;
@@ -47,10 +48,18 @@ multiple_target_analysis_strategy::multiple_target_analysis_strategy(int target_
         ERR_AI<< "the target number is invalid" << std::endl;
         target_number_ = MAX_TARGET_NUMBER;
     }
-    set_id("multiple_target_analysis_strategy");
+    set_id("multi_target_analysis_strategy");
 }
     
-boost::shared_ptr<attacks_vector> multiple_target_analysis_strategy::analyze_targets_impl(const aspect_attacks& asp_atks) const{
+void multi_target_analysis_strategy::set_default_attack_analysis_strategy() const{
+    if(const config &attack_analysis_strategy_cfg = target_analysis_strategy_cfg_.child("attack_analysis_strategy")){
+        attack_analysis_strategy_cfg_ = attack_analysis_strategy_cfg;
+        return;
+    }
+    attack_analysis_strategy_cfg_.child_or_add("attack_analysis_strategy")["name"]="multi_target";
+}
+    
+boost::shared_ptr<attacks_vector> multi_target_analysis_strategy::analyze_targets_impl(const aspect_attacks& asp_atks) const{
     const move_map& srcdst = asp_atks.get_srcdst();
     const move_map& dstsrc = asp_atks.get_dstsrc();
     const move_map& enemy_srcdst = asp_atks.get_enemy_srcdst();
@@ -90,24 +99,24 @@ boost::shared_ptr<attacks_vector> multiple_target_analysis_strategy::analyze_tar
 		}
 	}
     
-    int target_number = target_number_;
+    size_t target_number = target_number_;
     // there may not be enough number of targets
     if(target_locs.size() < target_number){
         target_number = target_locs.size();
     }
     
-    analysis_inputs ana_inp(srcdst, dstsrc, fullmove_srcdst, fullmove_dstsrc, enemy_srcdst, enemy_dstsrc, asp_atks.current_team()); 
+    analysis_inputs aas_inp(srcdst, dstsrc, fullmove_srcdst, fullmove_dstsrc, enemy_srcdst, enemy_dstsrc, asp_atks.current_team()); 
     
     if(target_number != 0){
         std::vector<map_location> cur_target_locs;
         cur_target_locs.reserve(target_number);
-        do_multiple_target_analysis(ana_inp, target_locs, 0, target_number, asp_atks, unit_locs, cur_target_locs, *res);
+        do_multiple_target_analysis(aas_inp, target_locs, 0, target_number, asp_atks, unit_locs, cur_target_locs, *res);
     }
     
 	return res;
 }
     
-void multiple_target_analysis_strategy::do_multiple_target_analysis(const analysis_inputs& ana_inp, 
+void multi_target_analysis_strategy::do_multiple_target_analysis(const analysis_inputs& aas_inp, 
                                                                     const std::vector<map_location>& target_locs, 
                                                                     const int target_count, 
                                                                     const int target_number, 
@@ -121,11 +130,10 @@ void multiple_target_analysis_strategy::do_multiple_target_analysis(const analys
     if(target_count == target_number){
         // Create the attack_analysis instance based on 
         // the analysis strategy from config in aspect_attack
-        const config& analysis_strategy_cfg = asp_atks.get_analysis_strategy_cfg();
-        attack_analysis analysis(analysis_strategy_cfg, target_number);
+        attack_analysis analysis(get_attack_analysis_strategy(), target_number);
         
         //analysis.target = cur_target_locs[0];
-        for(int i=0;i<cur_target_locs.size();++i){
+        for(size_t i=0;i<cur_target_locs.size();++i){
             analysis.analysis_results.at(i).target = cur_target_locs.at(i);
         }
         
@@ -150,72 +158,80 @@ void multiple_target_analysis_strategy::do_multiple_target_analysis(const analys
             }
         }
         
-        do_attack_analysis(ana_inp, cur_target_locs, adj_tiles, &asp_atks, units, used_locations, analysis, result);
+        do_attack_analysis(aas_inp, cur_target_locs, adj_tiles, &asp_atks, units, used_locations, analysis, result);
         
         return;
     }
     
     for(size_t i=target_count;i<=target_locs.size()-(target_number-target_count);++i){
         cur_target_locs.push_back(target_locs.at(i));
-        do_multiple_target_analysis(ana_inp, target_locs, target_count+1, target_number, asp_atks, units, cur_target_locs, result);
+        do_multiple_target_analysis(aas_inp, target_locs, target_count+1, target_number, asp_atks, units, cur_target_locs, result);
         cur_target_locs.pop_back();
     }
 }
     
-void multiple_target_analysis_strategy::do_attack_analysis(const analysis_inputs& ana_inp,
+void multi_target_analysis_strategy::do_attack_analysis(const analysis_inputs& aas_inp,
                                                            const std::vector<map_location>& target_locs,
                                                            const adj_tiles_vec& adj_tiles,
-                                                           const readonly_context *ai_obj,
+                                                           const readonly_context *ai_ptr,
                                                            std::vector<map_location>& units,
                                                            used_location_map& used_locations,
                                                            attack_analysis& cur_analysis,
                                                            std::vector<attack_analysis>& result) const{
+    // import inputs variables
+    const move_map& srcdst = aas_inp.srcdst;
+    const move_map& dstsrc = aas_inp.dstsrc;
+    const move_map& fullmove_dstsrc = aas_inp.fullmove_dstsrc;
+    const move_map& enemy_dstsrc = aas_inp.enemy_dstsrc;
+    const team& current_team = aas_inp.current_team;
+    
     // This function is called fairly frequently, so interact with the user here.
     
     ai::manager::raise_user_interact();
-    const int default_attack_depth = 5;
-    if(cur_analysis.movements.size() >= size_t(default_attack_depth)) {
-        //std::cerr << "ANALYSIS " << cur_analysis.movements.size() << " >= " << get_attack_depth() << "\n";
-        return;
-    }
-    gamemap &map_ = *resources::game_map;
-    unit_map &units_ = *resources::units;
-    std::vector<team> &teams_ = *resources::teams;
+	const int default_attack_depth = 5;
+	if(cur_analysis.movements.size() >= size_t(default_attack_depth)) {
+		//std::cerr << "ANALYSIS " << cur_analysis.movements.size() << " >= " << get_attack_depth() << "\n";
+		return;
+	}
+	gamemap &map_ = *resources::game_map;
+	unit_map &units_ = *resources::units;
+	std::vector<team> &teams_ = *resources::teams;
     
     
-    const size_t max_positions = 1000;
-    if(result.size() > max_positions && !cur_analysis.movements.empty()) {
-        LOG_AI << "cut analysis short with number of positions\n";
-        return;
-    }
+	const size_t max_positions = 1000;
+	if(result.size() > max_positions && !cur_analysis.movements.empty()) {
+		LOG_AI << "cut analysis short with number of positions\n";
+		return;
+	}
     
-    for(size_t i = 0; i != units.size(); ++i) {
-        const map_location current_unit = units[i];
+	for(size_t i = 0; i != units.size(); ++i) {
+		const map_location current_unit = units[i];
         
-        unit_map::iterator unit_itor = units_.find(current_unit);
-        assert(unit_itor != units_.end());
+		unit_map::iterator unit_itor = units_.find(current_unit);
+		assert(unit_itor != units_.end());
         
-        // See if the unit has the backstab ability.
-        // Units with backstab will want to try to have a
-        // friendly unit opposite the position they move to.
-        //
-        // See if the unit has the slow ability -- units with slow only attack first.
-        bool backstab = false, slow = false;
-        std::vector<attack_type>& attacks = unit_itor->attacks();
-        for(std::vector<attack_type>::iterator a = attacks.begin(); a != attacks.end(); ++a) {
-            a->set_specials_context(map_location(), map_location(), units_, true, NULL);
-            if(a->get_special_bool("backstab")) {
-                backstab = true;
-            }
+		// See if the unit has the backstab ability.
+		// Units with backstab will want to try to have a
+		// friendly unit opposite the position they move to.
+		//
+		// See if the unit has the slow ability -- units with slow only attack first.
+		bool backstab = false, slow = false;
+		std::vector<attack_type>& attacks = unit_itor->attacks();
+		for(std::vector<attack_type>::iterator a = attacks.begin(); a != attacks.end(); ++a) {
+			// For speed, just assume these specials will be active if
+			// they are present.
+			if ( a->get_special_bool("backstab", true) ) {
+				backstab = true;
+			}
             
-            if(a->get_special_bool("slow")) {
-                slow = true;
-            }
-        }
+			if ( a->get_special_bool("slow", true) ) {
+				slow = true;
+			}
+		}
         
-        if(slow && cur_analysis.movements.empty() == false) {
-            continue;
-        }
+		if(slow && cur_analysis.movements.empty() == false) {
+			continue;
+		}
         
         // Check if the friendly unit is surrounded,
         // A unit is surrounded if it is flanked by enemy units
@@ -238,7 +254,7 @@ void multiple_target_analysis_strategy::do_attack_analysis(const analysis_inputs
             if(map_.on_board(adj[tile]))
             {
                 accessible_tiles++;
-                if (tmp_unit != units_.end() && ana_inp.current_team.is_enemy(tmp_unit->side()))
+                if (tmp_unit != units_.end() && current_team.is_enemy(tmp_unit->side()))
                 {
                     enemy_units_around++;
                     possible_flanked = true;
@@ -249,7 +265,7 @@ void multiple_target_analysis_strategy::do_attack_analysis(const analysis_inputs
             if(map_.on_board(adj[tile + 3]))
             {
                 accessible_tiles++;
-                if (tmp_opposite_unit != units_.end() && ana_inp.current_team.is_enemy(tmp_opposite_unit->side()))
+                if (tmp_opposite_unit != units_.end() && current_team.is_enemy(tmp_opposite_unit->side()))
                 {
                     enemy_units_around++;
                     if(possible_flanked)
@@ -271,6 +287,7 @@ void multiple_target_analysis_strategy::do_attack_analysis(const analysis_inputs
         int best_target_id = 0;
         
         // Iterate over positions adjacent to all the targets, finding the best rated one.
+        assert(adj_tiles.size()<=target_number_);
         for(size_t j = 0; j < adj_tiles.size(); ++j) {
             const std::vector<map_location>& adj_locs = adj_tiles.at(j);
             const map_location& target = target_locs.at(j);
@@ -285,7 +302,7 @@ void multiple_target_analysis_strategy::do_attack_analysis(const analysis_inputs
                 // See if the current unit can reach that position.
                 if (loc != current_unit) {
                     typedef std::multimap<map_location,map_location>::const_iterator Itor;
-                    std::pair<Itor,Itor> its = ana_inp.dstsrc.equal_range(loc);
+                    std::pair<Itor,Itor> its = dstsrc.equal_range(loc);
                     while(its.first != its.second) {
                         if(its.first->second == current_unit)
                             break;
@@ -306,7 +323,8 @@ void multiple_target_analysis_strategy::do_attack_analysis(const analysis_inputs
                 }
                 
                 // Check to see whether this move would be a backstab.
-                bool is_backstab = false, is_surround = false; // is_surround: to surround target, different from is_surrounded defined earlier which means surrounded by enemy
+                int backstab_bonus = 1;
+                double surround_bonus = 1.0;
                 
                 if(adj_locs[(k+3)%6] != current_unit) {
                     const unit_map::const_iterator itor = units_.find(adj_locs[(k+3)%6]);
@@ -321,59 +339,55 @@ void multiple_target_analysis_strategy::do_attack_analysis(const analysis_inputs
                     if(itor != units_.end() &&
                        backstab_check(loc, target, units_, teams_)) {
                         if(backstab) {
-                            is_backstab = true;
+                            backstab_bonus = 2;
                         }
                         
                         // No surround bonus if target is skirmisher
-                        if (!itor->get_ability_bool("skirmisher")){
-                            is_surround = true;
-                        }
+                        if (!itor->get_ability_bool("skirmisher"))
+                            surround_bonus = 1.2;
                     }
-                    
-                    
                 }
                 
                 // See if this position is the best rated we've seen so far.
-                int rating = static_cast<int>(rate_terrain(*unit_itor, loc, is_backstab));
+                int rating = static_cast<int>(rate_terrain(*unit_itor, loc) * backstab_bonus * leadership_bonus);
                 if(cur_position >= 0 && rating < best_rating) {
                     continue;
                 }
                 
                 // Find out how vulnerable we are to attack from enemy units in this hex.
-                // and how much support we have on this hex from allies.
                 //FIXME: suokko's r29531 multiplied this by a constant 1.5. ?
+                const double vulnerability = ai_ptr->power_projection(loc,enemy_dstsrc);//?
                 
-                double vulnerability = 0.;
-                double support = 0.;
-                rate_vulnerability_support(loc, ana_inp.enemy_dstsrc, ana_inp.fullmove_dstsrc, is_surround, vulnerability, support);
+                // Calculate how much support we have on this hex from allies.
+                const double support = ai_ptr->power_projection(loc, fullmove_dstsrc);//?
                 
                 // If this is a position with equal defense to another position,
                 // but more vulnerability then we don't want to use it.
-    #ifdef SUOKKO
+#ifdef SUOKKO
                 //FIXME: this code was in sukko's r29531  Correct?
                 // scale vulnerability to 60 hp unit
                 if(cur_position >= 0 && rating < best_rating
-                   && (vulnerability*30.0)/unit_itor->second.hitpoints() -
-                   (support*30.0)/unit_itor->second.max_hitpoints()
+                   && (vulnerability/surround_bonus*30.0)/unit_itor->second.hitpoints() -
+                   (support*surround_bonus*30.0)/unit_itor->second.max_hitpoints()
                    > best_vulnerability - best_support) {
                     continue;
                 }
-    #else
-                if(cur_position >= 0 && rating == best_rating && vulnerability - support >= best_vulnerability - best_support) {
+#else
+                if(cur_position >= 0 && rating == best_rating && vulnerability/surround_bonus - support*surround_bonus >= best_vulnerability - best_support) {
                     continue;
                 }
-    #endif
+#endif
                 cur_position = k;
                 best_rating = rating;
                 best_target_id = j;
-    #ifdef SUOKKO
+#ifdef SUOKKO
                 //FIXME: this code was in sukko's r29531  Correct?
-                best_vulnerability = (vulnerability*30.0)/unit_itor->second.hitpoints();
-                best_support = (support*30.0)/unit_itor->second.max_hitpoints();
-    #else
-                best_vulnerability = vulnerability;
-                best_support = support;
-    #endif
+                best_vulnerability = (vulnerability/surround_bonus*30.0)/unit_itor->second.hitpoints();
+                best_support = (support*surround_bonus*30.0)/unit_itor->second.max_hitpoints();
+#else
+                best_vulnerability = vulnerability/surround_bonus;
+                best_support = support*surround_bonus;
+#endif
             }
         }
         
@@ -392,19 +406,16 @@ void multiple_target_analysis_strategy::do_attack_analysis(const analysis_inputs
             
             cur_analysis.analysis_results.at(best_target_id).is_surrounded = is_surrounded;
             
-            // log debug information, test only
-            LOG_AI<<"Total movements: "<<cur_analysis.movements.size()<<std::endl;
-            LOG_AI<<"Target IDs: "<<std::endl;
             for(size_t j=0;j<cur_analysis.movements_target_ids.size();++j){
                 LOG_AI<<cur_analysis.movements_target_ids.at(j)<<std::endl;
             }
             
-            if (ai_obj!=NULL) {
-                cur_analysis.analyze(map_, units_, *ai_obj, ana_inp.dstsrc, ana_inp.srcdst, ana_inp.enemy_dstsrc, ai_obj->get_aggression());
+            if (ai_ptr!=NULL) {
+                cur_analysis.analyze(map_, units_, *ai_ptr, dstsrc, srcdst, enemy_dstsrc, ai_ptr->get_aggression());
             }
             result.push_back(cur_analysis);
             used_locations[best_tile] = true;
-            do_attack_analysis(ana_inp, target_locs, adj_tiles, ai_obj, units, used_locations, cur_analysis, result);
+            do_attack_analysis(aas_inp, target_locs, adj_tiles, ai_ptr, units, used_locations, cur_analysis, result);
             used_locations[best_tile] = false;
             
             

@@ -43,6 +43,8 @@ public:
 
 class attack_analysis_strategy1 : public attack_analysis_strategy { 
 public:
+    attack_analysis_strategy1();
+    
     virtual void analyze_impl(attack_analysis& aas,
                               const gamemap& map, 
                               unit_map& units,

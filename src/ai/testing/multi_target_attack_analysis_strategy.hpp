@@ -14,11 +14,11 @@
 
 /**
  * @file
- * analysis_strategy: attack
+ * analysis_strategy: multi target attack
  */
 
-#ifndef AI_TESTING_ATTACK_ANALYSIS_STRATEGY_HPP
-#define AI_TESTING_ATTACK_ANALYSIS_STRATEGY_HPP
+#ifndef AI_TESTING_MULTI_TARGET_ATTACK_ANALYSIS_STRATEGY_HPP
+#define AI_TESTING_MULTI_TARGET_ATTACK_ANALYSIS_STRATEGY_HPP
 
 #include "../default/contexts.hpp"
 #include "analysis_strategy.hpp"
@@ -26,23 +26,10 @@
 namespace ai {
     
 namespace testing_ai_default {
-    
-class attack_analysis_strategy : public analysis_strategy{
-public:
-    virtual void analyze_impl(attack_analysis& aas,
-                              const gamemap& map, 
-                              unit_map& units,
-                              const readonly_context& ai_obj,
-                              const move_map& dstsrc, 
-                              const move_map& srcdst,
-                              const move_map& enemy_dstsrc, 
-                              double aggression) const = 0;
-    
-    virtual double rating_impl(const attack_analysis& aas, double aggression, const readonly_context& ai_obj) const = 0;
-};
 
-class attack_analysis_strategy1 : public attack_analysis_strategy { 
+class multi_target_attack_analysis_strategy : public attack_analysis_strategy {
 public:
+    multi_target_attack_analysis_strategy();
     virtual void analyze_impl(attack_analysis& aas,
                               const gamemap& map, 
                               unit_map& units,

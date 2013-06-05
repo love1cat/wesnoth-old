@@ -26,7 +26,7 @@ namespace ai {
     
 namespace testing_ai_default {
         
-class multiple_target_analysis_strategy : public target_analysis_strategy1 {
+class multi_target_analysis_strategy : public target_analysis_strategy1 {
 public:
     struct analysis_inputs {
         const move_map& srcdst; 
@@ -59,11 +59,11 @@ public:
     typedef std::vector< std::vector<map_location> > adj_tiles_vec;
     typedef std::map<map_location, bool> used_location_map;
     
-    multiple_target_analysis_strategy(int target_number=2);
+    multi_target_analysis_strategy(const config& target_analysis_strategy_cfg, size_t target_number=2);
     
     virtual boost::shared_ptr<attacks_vector> analyze_targets_impl(const aspect_attacks& asp_atks) const;
     
-    virtual void do_multiple_target_analysis(const analysis_inputs& ana_inp, 
+    virtual void do_multiple_target_analysis(const analysis_inputs& aas_inp, 
                                              const std::vector<map_location>& target_locs, 
                                              const int target_count, 
                                              const int target_number, 
@@ -72,7 +72,7 @@ public:
                                              std::vector<map_location>& cur_target_locs, 
                                              std::vector<attack_analysis>& result) const;
     
-    virtual void do_attack_analysis(const analysis_inputs& ana_inp,
+    virtual void do_attack_analysis(const analysis_inputs& aas_inp,
                                     const std::vector<map_location>& target_locs,
                                     const adj_tiles_vec& adj_tiles,
                                     const readonly_context *ai_obj,
@@ -81,10 +81,10 @@ public:
                                     attack_analysis& cur_analysis,
                                     std::vector<attack_analysis>& result) const;
     
-    virtual void set_default_attack_analysis_strategy(const config& target_anaysis_strategy_config);
+    virtual void set_default_attack_analysis_strategy() const;
 private:
-    int target_number_;
-    static const int MAX_TARGET_NUMBER = 3;
+    size_t target_number_;
+    static const size_t MAX_TARGET_NUMBER = 3;
 };
         
 } // end of namespace testing_ai_default

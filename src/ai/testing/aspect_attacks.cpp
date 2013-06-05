@@ -30,6 +30,7 @@
 #include "../../pathfind/pathfind.hpp"
 
 #include "target_analysis_strategy.hpp"
+#include "multi_target_analysis_strategy.hpp"
 
 namespace ai {
 
@@ -103,13 +104,13 @@ void aspect_attacks::set_strategy_from_config(const config& target_analysis_stra
         if(stra_name == "strategy1"){
             target_analysis_strategy_ptr stra_ptr= target_analysis_strategy_ptr(new target_analysis_strategy1(target_analysis_strategy_cfg_));
             set_current_strategy(stra_ptr);
-            LOG_AI << "target_analysis_strategy is set to " << stra_name << " by config" << std::endl;
+            LOG_AI << "target_analysis_strategy is set to " << get_current_strategy()->get_id() << " by config" << std::endl;
         } //TODO: add new strategy (with different name attribute) in "else if" block
-//        else if(stra_name == "multi_target") {
-//            target_analysis_strategy_ptr stra_ptr= target_analysis_strategy_ptr(new multiple_target_analysis_strategy());
-//            set_current_strategy(stra_ptr);
-//            LOG_AI << "target_analysis_strategy is set to " << stra_name << " by config" << std::endl;
-//        }
+        else if(stra_name == "multi_target") {
+            target_analysis_strategy_ptr stra_ptr= target_analysis_strategy_ptr(new multi_target_analysis_strategy(target_analysis_strategy_cfg_));
+            set_current_strategy(stra_ptr);
+            LOG_AI << "target_analysis_strategy is set to " << get_current_strategy()->get_id() << " by config" << std::endl;
+        }
         else{
             ERR_AI << "target_analysis_strategy tag has invalid 'name' attribute " << stra_name << std::endl;
         }

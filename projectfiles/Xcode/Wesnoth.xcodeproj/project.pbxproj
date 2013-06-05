@@ -70,6 +70,8 @@
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
 		A14ACFE1175D3C5D00B2FCE5 /* attack_analysis_strategy.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A14ACFDB175D3C5D00B2FCE5 /* attack_analysis_strategy.cpp */; };
 		A14ACFE3175D3C5D00B2FCE5 /* target_analysis_strategy.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A14ACFDF175D3C5D00B2FCE5 /* target_analysis_strategy.cpp */; };
+		A14ACFF1175E7AF100B2FCE5 /* multi_target_attack_analysis_strategy.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A14ACFED175E7AF000B2FCE5 /* multi_target_attack_analysis_strategy.cpp */; };
+		A14ACFF2175E7AF100B2FCE5 /* multi_target_analysis_strategy.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A14ACFEF175E7AF000B2FCE5 /* multi_target_analysis_strategy.cpp */; };
 		B504B94C1284C06B00261FE9 /* tips.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B504B94A1284C06B00261FE9 /* tips.cpp */; };
 		B504B94D1284C06B00261FE9 /* tips.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B504B94A1284C06B00261FE9 /* tips.cpp */; };
 		B508D13F10013BF900B12852 /* Growl.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B508D13E10013BF900B12852 /* Growl.framework */; };
@@ -1139,6 +1141,10 @@
 		A14ACFDC175D3C5D00B2FCE5 /* attack_analysis_strategy.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = attack_analysis_strategy.hpp; sourceTree = "<group>"; };
 		A14ACFDF175D3C5D00B2FCE5 /* target_analysis_strategy.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = target_analysis_strategy.cpp; sourceTree = "<group>"; };
 		A14ACFE0175D3C5D00B2FCE5 /* target_analysis_strategy.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = target_analysis_strategy.hpp; sourceTree = "<group>"; };
+		A14ACFED175E7AF000B2FCE5 /* multi_target_attack_analysis_strategy.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = multi_target_attack_analysis_strategy.cpp; sourceTree = "<group>"; };
+		A14ACFEE175E7AF000B2FCE5 /* multi_target_attack_analysis_strategy.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = multi_target_attack_analysis_strategy.hpp; sourceTree = "<group>"; };
+		A14ACFEF175E7AF000B2FCE5 /* multi_target_analysis_strategy.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = multi_target_analysis_strategy.cpp; sourceTree = "<group>"; };
+		A14ACFF0175E7AF100B2FCE5 /* multi_target_analysis_strategy.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = multi_target_analysis_strategy.hpp; sourceTree = "<group>"; };
 		B504B94A1284C06B00261FE9 /* tips.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = tips.cpp; sourceTree = "<group>"; };
 		B504B94B1284C06B00261FE9 /* tips.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = tips.hpp; sourceTree = "<group>"; };
 		B508D13E10013BF900B12852 /* Growl.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Growl.framework; path = lib/Growl.framework; sourceTree = "<group>"; };
@@ -2909,6 +2915,10 @@
 		B54AC6C00FEA9EB5006F6FBD /* testing */ = {
 			isa = PBXGroup;
 			children = (
+				A14ACFED175E7AF000B2FCE5 /* multi_target_attack_analysis_strategy.cpp */,
+				A14ACFEE175E7AF000B2FCE5 /* multi_target_attack_analysis_strategy.hpp */,
+				A14ACFEF175E7AF000B2FCE5 /* multi_target_analysis_strategy.cpp */,
+				A14ACFF0175E7AF100B2FCE5 /* multi_target_analysis_strategy.hpp */,
 				A14ACFDA175D3C5D00B2FCE5 /* analysis_strategy.hpp */,
 				A14ACFDB175D3C5D00B2FCE5 /* attack_analysis_strategy.cpp */,
 				A14ACFDC175D3C5D00B2FCE5 /* attack_analysis_strategy.hpp */,
@@ -4263,6 +4273,8 @@
 				62CC8E4C1771E7E100C16B75 /* game_config_manager.cpp in Sources */,
 				A14ACFE1175D3C5D00B2FCE5 /* attack_analysis_strategy.cpp in Sources */,
 				A14ACFE3175D3C5D00B2FCE5 /* target_analysis_strategy.cpp in Sources */,
+				A14ACFF1175E7AF100B2FCE5 /* multi_target_attack_analysis_strategy.cpp in Sources */,
+				A14ACFF2175E7AF100B2FCE5 /* multi_target_analysis_strategy.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

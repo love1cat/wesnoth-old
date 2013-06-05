@@ -58,10 +58,11 @@ protected:
                                     attack_analysis& cur_analysis
 ) const;
     
-    virtual void set_default_attack_analysis_strategy(const config& target_anaysis_strategy_config);
+    virtual void set_default_attack_analysis_strategy() const;
+    virtual const config& get_attack_analysis_strategy() const;
     
     config target_analysis_strategy_cfg_;
-    config attack_analysis_strategy_cfg_;
+    mutable config attack_analysis_strategy_cfg_;
 };
     
 } // end of namespace testing_ai_default

@@ -29,6 +29,8 @@
 #include "../../map.hpp"
 #include "../../team.hpp"
 
+#include "../testing/multi_target_attack_analysis_strategy.hpp"
+
 static lg::log_domain log_ai("ai/attack");
 #define LOG_AI LOG_STREAM(info, log_ai)
 #define ERR_AI LOG_STREAM(err, log_ai)
@@ -105,8 +107,13 @@ void attack_analysis::set_strategy_from_config(const config& attack_analysis_str
         if(stra_name == "strategy1"){
             attack_analysis_strategy_ptr stra_ptr= attack_analysis_strategy_ptr(new testing_ai_default::attack_analysis_strategy1());
             set_current_strategy(stra_ptr);
-            LOG_AI << "attack_analysis_strategy is set to " << stra_name  << " by config" << std::endl;
-        } // TODO: add new strategy (with different name attribute) in "else if" block
+            LOG_AI << "attack_analysis_strategy is set to " << get_current_strategy()->get_id()  << " by config" << std::endl;
+        } else if(stra_name == "multi_target"){
+            attack_analysis_strategy_ptr stra_ptr= attack_analysis_strategy_ptr(new testing_ai_default::multi_target_attack_analysis_strategy());
+            set_current_strategy(stra_ptr);
+            LOG_AI << "attack_analysis_strategy is set to " << get_current_strategy()->get_id()  << " by config" << std::endl;
+        }
+        // TODO: add new strategy (with different name attribute) in "else if" block
         else {
             ERR_AI << "attack_analysis_strategy tag has invalid 'name' attribute " << stra_name << std::endl;
         }

@@ -42,6 +42,9 @@ static lg::log_domain log_ai("ai/attack");
 namespace ai {
     
 namespace testing_ai_default {
+attack_analysis_strategy1::attack_analysis_strategy1(){
+    set_id("attack_analysis_strategy1");
+}
 
 void attack_analysis_strategy1::analyze_impl(attack_analysis& aas,
                                              const gamemap& map, 

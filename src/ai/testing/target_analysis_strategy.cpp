@@ -46,15 +46,21 @@ target_analysis_strategy1::target_analysis_strategy1(const config& cfg)
     : target_analysis_strategy_cfg_(cfg)
     , attack_analysis_strategy_cfg_(){
     set_id("target_analysis_strategy1");
-    set_default_attack_analysis_strategy(target_analysis_strategy_cfg_);
 }
     
-void target_analysis_strategy1::set_default_attack_analysis_strategy(const config& target_anaysis_strategy_config){
-    if(const config &attack_analysis_strategy_cfg = target_anaysis_strategy_config.child("attack_analysis_strategy")){
+void target_analysis_strategy1::set_default_attack_analysis_strategy() const{
+    if(const config &attack_analysis_strategy_cfg = target_analysis_strategy_cfg_.child("attack_analysis_strategy")){
         attack_analysis_strategy_cfg_ = attack_analysis_strategy_cfg;
         return;
-    }
+    } 
     attack_analysis_strategy_cfg_.child_or_add("attack_analysis_strategy")["name"]="strategy1";
+}
+    
+const config& target_analysis_strategy1::get_attack_analysis_strategy() const{
+    if(attack_analysis_strategy_cfg_.empty()){
+        set_default_attack_analysis_strategy();
+    }
+    return attack_analysis_strategy_cfg_;
 }
     
 boost::shared_ptr<attacks_vector> target_analysis_strategy1::analyze_targets_impl(const aspect_attacks& asp_atks) const{
@@ -99,7 +105,7 @@ boost::shared_ptr<attacks_vector> target_analysis_strategy1::analyze_targets_imp
             
             // attack analysis is created based on the config retrieved from target_analysis_strategy_config or default
             // see constructor and set_default_attack_analysis_strategy()
-			attack_analysis analysis(attack_analysis_strategy_cfg_);
+			attack_analysis analysis(get_attack_analysis_strategy());
             
 			analysis.target = j->get_location();
 			analysis.vulnerability = 0.0;
