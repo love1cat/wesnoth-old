@@ -110,7 +110,11 @@ boost::shared_ptr<attacks_vector> multi_target_analysis_strategy::analyze_target
     if(target_number != 0){
         std::vector<map_location> cur_target_locs;
         cur_target_locs.reserve(target_number);
-        do_multiple_target_analysis(aas_inp, target_locs, 0, target_number, asp_atks, unit_locs, cur_target_locs, *res);
+        for(size_t i=1;i<=target_number;++i){
+            // for all possible target numbers smaller than target_number, do attack analysis
+            // eg. if target_number = 2, we should do attack analysis on both 1 and 2 possible targets
+            do_multiple_target_analysis(aas_inp, target_locs, 0, i, asp_atks, unit_locs, cur_target_locs, *res);
+        }
     }
     
 	return res;

@@ -170,7 +170,7 @@ public:
         }
         
         // same member variables as attack_analysis
-        // check the use of the variables above
+        // check the description of the variables above
         map_location target;
         movements_vec movements;
         double target_value;
