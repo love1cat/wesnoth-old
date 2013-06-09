@@ -24,49 +24,49 @@
 #include "analysis_strategy.hpp"
 
 namespace ai {
-    
+	
 namespace testing_ai_default {
 
 class aspect_attacks;
-    
+	
 class target_analysis_strategy : public analysis_strategy{
 public:
-    virtual boost::shared_ptr<attacks_vector> analyze_targets_impl(const aspect_attacks& asp_atks) const = 0;
+	virtual boost::shared_ptr<attacks_vector> analyze_targets_impl(const aspect_attacks& asp_atks) const = 0;
 };
 
 class target_analysis_strategy1 : public target_analysis_strategy { 
-public:    
-    target_analysis_strategy1(const config& cfg);
-    virtual boost::shared_ptr<attacks_vector> analyze_targets_impl(const aspect_attacks& asp_atks) const;
-    
+public:	
+	target_analysis_strategy1(const config& cfg);
+	virtual boost::shared_ptr<attacks_vector> analyze_targets_impl(const aspect_attacks& asp_atks) const;
+	
 protected:
-    virtual double rate_terrain(const unit& u, const map_location& loc) const;
-    
-    virtual void do_attack_analysis(const map_location& loc,
-                                    const move_map& srcdst,
-                                    const move_map& dstsrc,
-                                    const move_map& fullmove_srcdst,
-                                    const move_map& fullmove_dstsrc,
-                                    const move_map& enemy_srcdst,
-                                    const move_map& enemy_dstsrc,
-                                    const map_location* tiles,
-                                    const team &current_team,
-                                    const readonly_context* ai_ptr,
-                                    bool* used_locations,
-                                    std::vector<map_location>& units,
-                                    std::vector<attack_analysis>& result,
-                                    attack_analysis& cur_analysis
+	virtual double rate_terrain(const unit& u, const map_location& loc) const;
+	
+	virtual void do_attack_analysis(const map_location& loc,
+									const move_map& srcdst,
+									const move_map& dstsrc,
+									const move_map& fullmove_srcdst,
+									const move_map& fullmove_dstsrc,
+									const move_map& enemy_srcdst,
+									const move_map& enemy_dstsrc,
+									const map_location* tiles,
+									const team &current_team,
+									const readonly_context* ai_ptr,
+									bool* used_locations,
+									std::vector<map_location>& units,
+									std::vector<attack_analysis>& result,
+									attack_analysis& cur_analysis
 ) const;
-    
-    virtual void set_default_attack_analysis_strategy() const;
-    virtual const config& get_attack_analysis_strategy() const;
-    
-    config target_analysis_strategy_cfg_;
-    mutable config attack_analysis_strategy_cfg_;
+	
+	virtual void set_default_attack_analysis_strategy() const;
+	virtual const config& get_attack_analysis_strategy() const;
+	
+	config target_analysis_strategy_cfg_;
+	mutable config attack_analysis_strategy_cfg_;
 };
-    
+	
 } // end of namespace testing_ai_default
-    
+	
 } // end of namespace ai
 
 #endif

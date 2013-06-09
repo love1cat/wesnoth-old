@@ -51,10 +51,10 @@ struct target {
 class attack_analysis : public game_logic::formula_callable, public virtual testing_ai_default::analysis_strategy_component<testing_ai_default::attack_analysis_strategy>
 {
 public:
-    typedef testing_ai_default::analysis_strategy_component<testing_ai_default::attack_analysis_strategy>::strategy_ptr attack_analysis_strategy_ptr;
-    typedef std::pair<map_location,map_location> movement_step;
-    typedef std::vector<movement_step> movements_vec;
-    
+	typedef testing_ai_default::analysis_strategy_component<testing_ai_default::attack_analysis_strategy>::strategy_ptr attack_analysis_strategy_ptr;
+	typedef std::pair<map_location,map_location> movement_step;
+	typedef std::vector<movement_step> movements_vec;
+	
 	attack_analysis() :
 		game_logic::formula_callable(),
 		target(),
@@ -75,8 +75,8 @@ public:
 		is_surrounded(false)
 	{
 	}
-    
-    explicit attack_analysis(const config& cfg, int target_number=1);
+	
+	explicit attack_analysis(const config& cfg, int target_number=1);
 
 	void analyze(const gamemap& map, unit_map& units,
 				 const readonly_context& ai_obj,
@@ -86,9 +86,9 @@ public:
 	double rating(double aggression, const readonly_context& ai_obj) const;
 	variant get_value(const std::string& key) const;
 	void get_inputs(std::vector<game_logic::formula_input>* inputs) const;
-    
-    virtual attack_analysis_strategy_ptr get_default_strategy() const;
-    virtual void set_strategy_from_config(const config& attack_analysis_strategy_cfg);
+	
+	virtual attack_analysis_strategy_ptr get_default_strategy() const;
+	virtual void set_strategy_from_config(const config& attack_analysis_strategy_cfg);
 
 	bool attack_close(const map_location& loc) const;
 
@@ -139,57 +139,57 @@ public:
 
 	/** Is true if the units involved in this attack sequence are surrounded. */
 	bool is_surrounded;
-    
-    //// multiple target attack analysis variables ////
-    
-    // "movements_target_ids" saves "target id" associated
-    // with the movement in "movements" in multiple target case.
-    std::vector<int> movements_target_ids;
-    
-    // struct for saving analysis results of different targets
-    struct analysis_result{
-        analysis_result () :
-        target(),
-        movements(),
-        target_value(0.0),
-        avg_losses(0.0),
-        chance_to_kill(0.0),
-        avg_damage_inflicted(0.0),
-        target_starting_damage(0),
-        avg_damage_taken(0.0),
-        resources_used(0.0),
-        terrain_quality(0.0),
-        alternative_terrain_quality(0.0),
-        vulnerability(0.0),
-        support(0.0),
-        leader_threat(false),
-        uses_leader(false),
-        is_surrounded(false),
-        is_visited(false)
-        {
-        }
-        
-        // same member variables as attack_analysis
-        // check the description of the variables above
-        map_location target;
-        movements_vec movements;
-        double target_value;
-        double avg_losses;
-        double chance_to_kill;
-        double avg_damage_inflicted; 
-        int target_starting_damage;
-        double avg_damage_taken;
-        double resources_used;
-        double terrain_quality;
-        double alternative_terrain_quality;
-        double vulnerability, support;
-        bool leader_threat;
-        bool uses_leader;
-        bool is_surrounded;
-        bool is_visited;
-    };
-    
-    std::vector<analysis_result> analysis_results;
+	
+	//// multiple target attack analysis variables ////
+	
+	// "movements_target_ids" saves "target id" associated
+	// with the movement in "movements" in multiple target case.
+	std::vector<int> movements_target_ids;
+	
+	// struct for saving analysis results of different targets
+	struct analysis_result{
+		analysis_result () :
+		target(),
+		movements(),
+		target_value(0.0),
+		avg_losses(0.0),
+		chance_to_kill(0.0),
+		avg_damage_inflicted(0.0),
+		target_starting_damage(0),
+		avg_damage_taken(0.0),
+		resources_used(0.0),
+		terrain_quality(0.0),
+		alternative_terrain_quality(0.0),
+		vulnerability(0.0),
+		support(0.0),
+		leader_threat(false),
+		uses_leader(false),
+		is_surrounded(false),
+		is_visited(false)
+		{
+		}
+		
+		// same member variables as attack_analysis
+		// check the description of the variables above
+		map_location target;
+		movements_vec movements;
+		double target_value;
+		double avg_losses;
+		double chance_to_kill;
+		double avg_damage_inflicted; 
+		int target_starting_damage;
+		double avg_damage_taken;
+		double resources_used;
+		double terrain_quality;
+		double alternative_terrain_quality;
+		double vulnerability, support;
+		bool leader_threat;
+		bool uses_leader;
+		bool is_surrounded;
+		bool is_visited;
+	};
+	
+	std::vector<analysis_result> analysis_results;
 };
 
 
