@@ -180,4 +180,4 @@ for test in tests(cfg):
 	save_result(cfg,log_file,game_result)
 	if((game_result.ai_config1 == ai2_id and game_result.winner_side=='1') or (game_result.ai_config2 == ai2_id and game_result.winner_side=='2')):
         	ai2win_cnt=ai2win_cnt+1;
-print 'side 2 wins ' + str(ai2win_cnt) + '\n'
+print 'AI 2 wins ' + str(ai2win_cnt) + '\n'
