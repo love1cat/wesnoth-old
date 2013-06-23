@@ -24,21 +24,31 @@
 #include "boost/shared_ptr.hpp"
 
 namespace ai {
+<<<<<<< HEAD
 
 namespace testing_ai_default {
 
+=======
+	
+namespace testing_ai_default {
+	
+>>>>>>> Applying format changes (4 SPACEs to TAB)
 // analysis strategy component for default strategy pointer operations
 template<class T>
 class analysis_strategy_component {
 public:
-<<<<<<< HEAD
 	typedef boost::shared_ptr<T> strategy_ptr;
 	const strategy_ptr& get_strategy() const {
+<<<<<<< HEAD
 		if(concrete_strategy_ptr_ == NULL) {
+=======
+		if(concrete_strategy_ptr_ == NULL){
+>>>>>>> Applying format changes (4 SPACEs to TAB)
 			concrete_strategy_ptr_ = get_default_strategy();
 		}
 		return concrete_strategy_ptr_;
 	}
+<<<<<<< HEAD
 
 	virtual strategy_ptr get_default_strategy() const = 0;
 	virtual void set_strategy_error_handling() {}
@@ -47,40 +57,25 @@ public:
 			concrete_strategy_ptr_ = stra_ptr;
 		}
 		else {
+=======
+	
+	virtual strategy_ptr get_default_strategy() const = 0;
+	virtual void set_strategy_error_handling(){}
+	virtual void set_current_strategy(const strategy_ptr& stra_ptr){
+		if(stra_ptr != NULL) {
+			concrete_strategy_ptr_ = stra_ptr;
+		} else {
+>>>>>>> Applying format changes (4 SPACEs to TAB)
 			set_strategy_error_handling();
 		}
 	}
 	virtual const strategy_ptr& get_current_strategy() const {
 		return concrete_strategy_ptr_;
 	}
+<<<<<<< HEAD
 
 	virtual ~analysis_strategy_component() {}
 
-=======
-    typedef boost::shared_ptr<T> strategy_ptr;
-    const strategy_ptr& get_strategy() const {
-        if(concrete_strategy_ptr_ == NULL){
-            concrete_strategy_ptr_ = get_default_strategy();
-        }
-        return concrete_strategy_ptr_;
-    }
-    
-    virtual strategy_ptr get_default_strategy() const = 0;
-    virtual void set_strategy_error_handling(){}
-    virtual void set_current_strategy(const strategy_ptr& stra_ptr){
-        if(stra_ptr != NULL) {
-            concrete_strategy_ptr_ = stra_ptr;
-        } else {
-            set_strategy_error_handling();
-        }
-    }
-    virtual const strategy_ptr& get_current_strategy() const {
-        return concrete_strategy_ptr_;
-    }
-    
-    virtual ~analysis_strategy_component(){}
-    
->>>>>>> AI variant improvement - attack analysis strategy is now bound
 private:
 	mutable strategy_ptr concrete_strategy_ptr_;
 };
@@ -104,6 +99,30 @@ protected:
 
 } // end of namespace testing_ai_default
 
+=======
+	
+	virtual ~analysis_strategy_component(){}
+	
+private:
+	mutable strategy_ptr concrete_strategy_ptr_;
+};
+	
+// analysis strategy base class definitions
+class analysis_strategy {
+public:
+	analysis_strategy() : analysis_strategy_id_("undefined"){}
+	virtual ~analysis_strategy(){};
+
+	inline std::string get_id() const {return analysis_strategy_id_;}
+	inline void set_id(const std::string& id){analysis_strategy_id_ = id;}
+	
+protected:	
+	std::string analysis_strategy_id_;
+};
+	
+} // end of namespace testing_ai_default
+	
+>>>>>>> Applying format changes (4 SPACEs to TAB)
 } // end of namespace ai
 
 #endif

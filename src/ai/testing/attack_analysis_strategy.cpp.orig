@@ -1,22 +1,14 @@
 /*
  Copyright (C) 2009 - 2013 by Yurii Chernyi <terraninfo@terraninfo.net>
  Part of the Battle for Wesnoth Project http://www.wesnoth.org/
-<<<<<<< HEAD
 
-=======
- 
->>>>>>> AI varaint is implemented based on master 1.11.4
  This program is free software; you can redistribute it and/or modify
  it under the terms of the GNU General Public License as published by
  the Free Software Foundation; either version 2 of the License, or
  (at your option) any later version.
  This program is distributed in the hope that it will be useful,
  but WITHOUT ANY WARRANTY.
-<<<<<<< HEAD
 
-=======
- 
->>>>>>> AI varaint is implemented based on master 1.11.4
  See the COPYING file for more details.
  */
 
@@ -66,6 +58,25 @@ void attack_analysis_strategy1::analyze_impl(attack_analysis& aas,
 	const map_location& target = aas.target;
 	const std::vector<std::pair<map_location,map_location> >& movements = aas.movements;
 
+=======
+	
+namespace testing_ai_default {
+
+void attack_analysis_strategy1::analyze_impl(attack_analysis& aas,
+											 const gamemap& map, 
+											 unit_map& units,
+											 const readonly_context& ai_obj,
+											 const move_map& dstsrc, 
+											 const move_map& srcdst,
+											 const move_map& enemy_dstsrc, 
+											 double aggression) const{
+  	// import variables of attack_analysis
+	
+	// computed values
+	const map_location& target = aas.target;
+	const std::vector<std::pair<map_location,map_location> >& movements = aas.movements;
+	
+>>>>>>> Applying format changes (4 SPACEs to TAB)
 	// values yet to be determined
 	bool& leader_threat = aas.leader_threat;
 	bool& uses_leader = aas.uses_leader;
@@ -78,45 +89,17 @@ void attack_analysis_strategy1::analyze_impl(attack_analysis& aas,
 	double& chance_to_kill = aas.chance_to_kill;
 	double& resources_used = aas.resources_used;
 	double& terrain_quality = aas.terrain_quality;
+<<<<<<< HEAD
 
 	const unit_map::const_iterator defend_it = units.find(target);
 	assert(defend_it != units.end());
 
 =======
-    
-namespace testing_ai_default {
-
-void attack_analysis_strategy1::analyze_impl(attack_analysis& aas,
-                                             const gamemap& map, 
-                                             unit_map& units,
-                                             const readonly_context& ai_obj,
-                                             const move_map& dstsrc, 
-                                             const move_map& srcdst,
-                                             const move_map& enemy_dstsrc, 
-                                             double aggression) const{
-  	// import variables of attack_analysis
-    
-    // computed values
-    const map_location& target = aas.target;
-	const std::vector<std::pair<map_location,map_location> >& movements = aas.movements;
-    
-    // values yet to be determined
-    bool& leader_threat = aas.leader_threat;
-    bool& uses_leader = aas.uses_leader;
-    double& target_value = aas.target_value;
-    int& target_starting_damage = aas.target_starting_damage;
-    double& alternative_terrain_quality = aas.alternative_terrain_quality;
-    double& avg_damage_inflicted = aas.avg_damage_inflicted;
-	double& avg_damage_taken = aas.avg_damage_taken;
-    double& avg_losses = aas.avg_losses;
-	double& chance_to_kill = aas.chance_to_kill;
-    double& resources_used = aas.resources_used;
-    double& terrain_quality = aas.terrain_quality;
-    
-    const unit_map::const_iterator defend_it = units.find(target);
+	
+	const unit_map::const_iterator defend_it = units.find(target);
 	assert(defend_it != units.end());
-    
->>>>>>> AI varaint is implemented based on master 1.11.4
+	
+>>>>>>> Applying format changes (4 SPACEs to TAB)
 	// See if the target is a threat to our leader or an ally's leader.
 	map_location adj[6];
 	get_adjacent_tiles(target,adj);
@@ -132,24 +115,23 @@ void attack_analysis_strategy1::analyze_impl(attack_analysis& aas,
 	leader_threat = (tile != 6);
 	uses_leader = false;
 
+=======
+	
+	leader_threat = (tile != 6);
+	uses_leader = false;
+	
+>>>>>>> Applying format changes (4 SPACEs to TAB)
 	target_value = defend_it->cost();
 	target_value += (double(defend_it->experience())/
 					 double(defend_it->max_experience()))*target_value;
 	target_starting_damage = defend_it->max_hitpoints() -
+<<<<<<< HEAD
 							 defend_it->hitpoints();
 
 =======
-    
-	leader_threat = (tile != 6);
-	uses_leader = false;
-    
-	target_value = defend_it->cost();
-	target_value += (double(defend_it->experience())/
-	                 double(defend_it->max_experience()))*target_value;
-	target_starting_damage = defend_it->max_hitpoints() -
-    defend_it->hitpoints();
-    
->>>>>>> AI varaint is implemented based on master 1.11.4
+	defend_it->hitpoints();
+	
+>>>>>>> Applying format changes (4 SPACEs to TAB)
 	// Calculate the 'alternative_terrain_quality' -- the best possible defensive values
 	// the attacking units could hope to achieve if they didn't attack and moved somewhere.
 	// This is used for comparative purposes, to see just how vulnerable the AI is
@@ -166,8 +148,8 @@ void attack_analysis_strategy1::analyze_impl(attack_analysis& aas,
 <<<<<<< HEAD
 
 =======
-    
->>>>>>> AI varaint is implemented based on master 1.11.4
+	
+>>>>>>> Applying format changes (4 SPACEs to TAB)
 	avg_damage_inflicted = 0.0;
 	avg_damage_taken = 0.0;
 	resources_used = 0.0;
@@ -186,33 +168,30 @@ void attack_analysis_strategy1::analyze_impl(attack_analysis& aas,
 	battle_context* prev_bc = NULL;
 	const combatant* prev_def = NULL;
 
+=======
+	
+	double def_avg_experience = 0.0;
+	double first_chance_kill = 0.0;
+	
+	double prob_dead_already = 0.0;
+	assert(!movements.empty());
+	std::vector<std::pair<map_location,map_location> >::const_iterator m;
+	
+	battle_context *prev_bc = NULL;
+	const combatant *prev_def = NULL;
+	
+>>>>>>> Applying format changes (4 SPACEs to TAB)
 	for (m = movements.begin(); m != movements.end(); ++m) {
 		// We fix up units map to reflect what this would look like.
 		unit* up = units.extract(m->first);
 		up->set_location(m->second);
 		units.insert(up);
 		double m_aggression = aggression;
+<<<<<<< HEAD
 
 =======
-    
-	double def_avg_experience = 0.0;
-	double first_chance_kill = 0.0;
-    
-	double prob_dead_already = 0.0;
-	assert(!movements.empty());
-	std::vector<std::pair<map_location,map_location> >::const_iterator m;
-    
-	battle_context *prev_bc = NULL;
-	const combatant *prev_def = NULL;
-    
-	for (m = movements.begin(); m != movements.end(); ++m) {
-		// We fix up units map to reflect what this would look like.
-		unit *up = units.extract(m->first);
-		up->set_location(m->second);
-		units.insert(up);
-		double m_aggression = aggression;
-        
->>>>>>> AI varaint is implemented based on master 1.11.4
+		
+>>>>>>> Applying format changes (4 SPACEs to TAB)
 		if (up->can_recruit()) {
 			uses_leader = true;
 			// FIXME: suokko's r29531 omitted this line
@@ -225,11 +204,11 @@ void attack_analysis_strategy1::analyze_impl(attack_analysis& aas,
 		battle_context* bc;
 
 =======
-        
+		
 		bool from_cache = false;
 		battle_context *bc;
-        
->>>>>>> AI varaint is implemented based on master 1.11.4
+		
+>>>>>>> Applying format changes (4 SPACEs to TAB)
 		// This cache is only about 99% correct, but speeds up evaluation by about 1000 times.
 		// We recalculate when we actually attack.
 		const readonly_context::unit_stats_cache_t::key_type cache_key = std::make_pair(target, &up->type());
@@ -240,12 +219,18 @@ void attack_analysis_strategy1::analyze_impl(attack_analysis& aas,
 				usc->second.first.attack_num <
 				static_cast<int>(up->attacks().size())) {
 
+=======
+			usc->second.first.attack_num <
+			static_cast<int>(up->attacks().size())) {
+			
+>>>>>>> Applying format changes (4 SPACEs to TAB)
 			from_cache = true;
 			bc = new battle_context(usc->second.first, usc->second.second);
 		}
 		else {
 			bc = new battle_context(units, m->second, target, -1, -1, m_aggression, prev_def);
 		}
+<<<<<<< HEAD
 		const combatant& att = bc->get_attacker_combatant(prev_def);
 		const combatant& def = bc->get_defender_combatant(prev_def);
 
@@ -270,38 +255,30 @@ void attack_analysis_strategy1::analyze_impl(attack_analysis& aas,
 		double prob_survived = (1.0 - prob_died) * prob_fought;
 
 =======
-            usc->second.first.attack_num <
-            static_cast<int>(up->attacks().size())) {
-            
-			from_cache = true;
-			bc = new battle_context(usc->second.first, usc->second.second);
-		} else {
-			bc = new battle_context(units, m->second, target, -1, -1, m_aggression, prev_def);
-		}
 		const combatant &att = bc->get_attacker_combatant(prev_def);
 		const combatant &def = bc->get_defender_combatant(prev_def);
-        
+		
 		delete prev_bc;
 		prev_bc = bc;
 		prev_def = &bc->get_defender_combatant(prev_def);
-        
+		
 		if ( !from_cache ) {
 			ai_obj.unit_stats_cache().insert(
-                                             std::make_pair(cache_key, std::make_pair(bc->get_attacker_stats(),
-                                                                                      bc->get_defender_stats())));
+											 std::make_pair(cache_key, std::make_pair(bc->get_attacker_stats(),
+																					  bc->get_defender_stats())));
 		}
-        
+		
 		// Note we didn't fight at all if defender is already dead.
 		double prob_fought = (1.0 - prob_dead_already);
-        
+		
 		/** @todo 1.9 add combatant.prob_killed */
 		double prob_killed = def.hp_dist[0] - prob_dead_already;
 		prob_dead_already = def.hp_dist[0];
-        
+		
 		double prob_died = att.hp_dist[0];
 		double prob_survived = (1.0 - prob_died) * prob_fought;
-        
->>>>>>> AI varaint is implemented based on master 1.11.4
+		
+>>>>>>> Applying format changes (4 SPACEs to TAB)
 		double cost = up->cost();
 		const bool on_village = map.is_village(m->second);
 		// Up to double the value of a unit based on experience
@@ -318,15 +295,15 @@ void attack_analysis_strategy1::analyze_impl(attack_analysis& aas,
 		}
 
 =======
-        
+		
 		// add half of cost for poisoned unit so it might get chance to heal
 		avg_losses += cost * up->get_state(unit::STATE_POISONED) /2;
-        
+		
 		if (!bc->get_defender_stats().is_poisoned) {
 			avg_damage_inflicted += game_config::poison_amount * 2 * bc->get_defender_combatant().poisoned * (1 - prob_killed);
 		}
-        
->>>>>>> AI varaint is implemented based on master 1.11.4
+		
+>>>>>>> Applying format changes (4 SPACEs to TAB)
 		// Double reward to emphasize getting onto villages if they survive.
 		if (on_village) {
 			avg_damage_taken -= game_config::poison_amount*2 * prob_survived;
@@ -336,10 +313,10 @@ void attack_analysis_strategy1::analyze_impl(attack_analysis& aas,
 		terrain_quality += (double(bc->get_defender_stats().chance_to_hit)/100.0)*cost * (on_village ? 0.5 : 1.0);
 
 =======
-        
+		
 		terrain_quality += (double(bc->get_defender_stats().chance_to_hit)/100.0)*cost * (on_village ? 0.5 : 1.0);
-        
->>>>>>> AI varaint is implemented based on master 1.11.4
+		
+>>>>>>> Applying format changes (4 SPACEs to TAB)
 		double advance_prob = 0.0;
 		// The reward for advancing a unit is to get a 'negative' loss of that unit
 		if (!up->advances_to().empty()) {
@@ -347,8 +324,8 @@ void attack_analysis_strategy1::analyze_impl(attack_analysis& aas,
 <<<<<<< HEAD
 
 =======
-            
->>>>>>> AI varaint is implemented based on master 1.11.4
+			
+>>>>>>> Applying format changes (4 SPACEs to TAB)
 			// See bug #6272... in some cases, unit already has got enough xp to advance,
 			// but hasn't (bug elsewhere?).  Can cause divide by zero.
 			if (xp_for_advance <= 0)
@@ -358,21 +335,17 @@ void attack_analysis_strategy1::analyze_impl(attack_analysis& aas,
 			int fight_xp = defend_it->level();
 			int kill_xp = game_config::kill_xp(fight_xp);
 
+=======
+			
+			int fight_xp = defend_it->level();
+			int kill_xp = game_config::kill_xp(fight_xp);
+			
+>>>>>>> Applying format changes (4 SPACEs to TAB)
 			if (fight_xp >= xp_for_advance) {
 				advance_prob = prob_fought;
 				avg_losses -= up->cost() * prob_fought;
 			}
 			else if (kill_xp >= xp_for_advance) {
-=======
-            
-			int fight_xp = defend_it->level();
-			int kill_xp = game_config::kill_xp(fight_xp);
-            
-			if (fight_xp >= xp_for_advance) {
-				advance_prob = prob_fought;
-				avg_losses -= up->cost() * prob_fought;
-			} else if (kill_xp >= xp_for_advance) {
->>>>>>> AI varaint is implemented based on master 1.11.4
 				advance_prob = prob_killed;
 				avg_losses -= up->cost() * prob_killed;
 				// The reward for getting a unit closer to advancement
@@ -393,15 +366,15 @@ void attack_analysis_strategy1::analyze_impl(attack_analysis& aas,
 			}
 
 =======
-                fight_xp * (prob_fought - prob_killed)
-                / xp_for_advance;
+				fight_xp * (prob_fought - prob_killed)
+				/ xp_for_advance;
 			} else {
 				avg_losses -= up->cost() * 0.25 *
-                (kill_xp * prob_killed + fight_xp * (prob_fought - prob_killed))
-                / xp_for_advance;
+				(kill_xp * prob_killed + fight_xp * (prob_fought - prob_killed))
+				/ xp_for_advance;
 			}
-            
->>>>>>> AI varaint is implemented based on master 1.11.4
+			
+>>>>>>> Applying format changes (4 SPACEs to TAB)
 			// The reward for killing with a unit that plagues
 			// is to get a 'negative' loss of that unit.
 			if (bc->get_attacker_stats().plagues) {
@@ -414,11 +387,11 @@ void attack_analysis_strategy1::analyze_impl(attack_analysis& aas,
 		avg_damage_taken += (up->hitpoints() - att.average_hp()) * (1.0 - advance_prob);
 
 =======
-        
+		
 		// If we didn't advance, we took this damage.
 		avg_damage_taken += (up->hitpoints() - att.average_hp()) * (1.0 - advance_prob);
-        
->>>>>>> AI varaint is implemented based on master 1.11.4
+		
+>>>>>>> Applying format changes (4 SPACEs to TAB)
 		/**
 		 * @todo 1.9: attack_prediction.cpp should understand advancement
 		 * directly.  For each level of attacker def gets 1 xp or
@@ -433,37 +406,31 @@ void attack_analysis_strategy1::analyze_impl(attack_analysis& aas,
 	}
 <<<<<<< HEAD
 
+=======
+	
+>>>>>>> Applying format changes (4 SPACEs to TAB)
 	if (!defend_it->advances_to().empty() &&
 			def_avg_experience >= defend_it->max_experience() - defend_it->experience()) {
-=======
-    
-	if (!defend_it->advances_to().empty() &&
-		def_avg_experience >= defend_it->max_experience() - defend_it->experience()) {
->>>>>>> AI varaint is implemented based on master 1.11.4
 		// It's likely to advance: only if we can kill with first blow.
 		chance_to_kill = first_chance_kill;
 		// Negative average damage (it will advance).
 		avg_damage_inflicted += defend_it->hitpoints() - defend_it->max_hitpoints();
-<<<<<<< HEAD
 	}
 	else {
 		chance_to_kill = prev_def->hp_dist[0];
 		avg_damage_inflicted += defend_it->hitpoints() - prev_def->average_hp(map.gives_healing(defend_it->get_location()));
 	}
+<<<<<<< HEAD
 
 	delete prev_bc;
 	terrain_quality /= resources_used;
 
 =======
-	} else {
-		chance_to_kill = prev_def->hp_dist[0];
-		avg_damage_inflicted += defend_it->hitpoints() - prev_def->average_hp(map.gives_healing(defend_it->get_location()));
-	}
-    
+	
 	delete prev_bc;
 	terrain_quality /= resources_used;
-    
->>>>>>> AI varaint is implemented based on master 1.11.4
+	
+>>>>>>> Applying format changes (4 SPACEs to TAB)
 	// Restore the units to their original positions.
 	for (m = movements.begin(); m != movements.end(); ++m) {
 		units.move(m->second, m->first);
@@ -474,6 +441,11 @@ void attack_analysis_strategy1::analyze_impl(attack_analysis& aas,
 double attack_analysis_strategy1::rating_impl(const attack_analysis& aas, double aggression, const readonly_context& ai_obj) const {
 	// import variables of attack_analysis
 
+=======
+double attack_analysis_strategy1::rating_impl(const attack_analysis& aas, double aggression, const readonly_context& ai_obj) const{
+	// import variables of attack_analysis
+	
+>>>>>>> Applying format changes (4 SPACEs to TAB)
 	// computed values
 	const map_location& target = aas.target;
 	const std::vector<std::pair<map_location,map_location> >& movements = aas.movements;
@@ -491,6 +463,7 @@ double attack_analysis_strategy1::rating_impl(const attack_analysis& aas, double
 	const double& resources_used = aas.resources_used;
 	const double& terrain_quality = aas.terrain_quality;
 	const bool& is_surrounded = aas.is_surrounded;
+<<<<<<< HEAD
 
 	if(leader_threat) {
 		aggression = 1.0;
@@ -503,38 +476,18 @@ double attack_analysis_strategy1::rating_impl(const attack_analysis& aas, double
 	double value = chance_to_kill*target_value - avg_losses*(1.0-aggression);
 
 =======
-double attack_analysis_strategy1::rating_impl(const attack_analysis& aas, double aggression, const readonly_context& ai_obj) const{
-    // import variables of attack_analysis
-    
-    // computed values
-    const map_location& target = aas.target;
-	const std::vector<std::pair<map_location,map_location> >& movements = aas.movements;
-    const double& vulnerability = aas.vulnerability;
-    const double& support = aas.support;
-    const bool& leader_threat = aas.leader_threat;
-    const bool& uses_leader = aas.uses_leader;
-    const double& target_value = aas.target_value;
-    const int& target_starting_damage = aas.target_starting_damage;
-    const double& alternative_terrain_quality = aas.alternative_terrain_quality;
-    const double& avg_damage_inflicted = aas.avg_damage_inflicted;
-	const double& avg_damage_taken = aas.avg_damage_taken;
-    const double& avg_losses = aas.avg_losses;
-	const double& chance_to_kill = aas.chance_to_kill;
-    const double& resources_used = aas.resources_used;
-    const double& terrain_quality = aas.terrain_quality;
-    const bool& is_surrounded = aas.is_surrounded;
-    
+	
    	if(leader_threat) {
 		aggression = 1.0;
 	}
-    
+	
 	if(uses_leader) {
 		aggression = ai_obj.get_leader_aggression();
 	}
-    
+	
 	double value = chance_to_kill*target_value - avg_losses*(1.0-aggression);
-    
->>>>>>> AI varaint is implemented based on master 1.11.4
+	
+>>>>>>> Applying format changes (4 SPACEs to TAB)
 	if(terrain_quality > alternative_terrain_quality) {
 		// This situation looks like it might be a bad move:
 		// we are moving our attackers out of their optimal terrain
@@ -543,8 +496,8 @@ double attack_analysis_strategy1::rating_impl(const attack_analysis& aas, double
 <<<<<<< HEAD
 
 =======
-        
->>>>>>> AI varaint is implemented based on master 1.11.4
+		
+>>>>>>> Applying format changes (4 SPACEs to TAB)
 #ifdef SUOKKO
 		//FIXME: this code was in sukko's r29531  Correct?
 		const double exposure_mod = uses_leader ? ai_obj.current_team().caution()* 8.0 : ai_obj.current_team().caution() * 4.0;
@@ -566,10 +519,25 @@ double attack_analysis_strategy1::rating_impl(const attack_analysis& aas, double
 	// or if the unit is surrounded and the average damage is 0,
 	// the unit skips its sanity check and tries to break free as good as possible.
 	if(!is_surrounded || (support != 0 && avg_damage_taken != 0)) {
+=======
+		<< vulnerability << "/" << support << " = " << (vulnerability/std::max<double>(support,0.1)) << "\n";
+		value -= exposure*(1.0-aggression);
+	}
+	
+	// Prefer to attack already damaged targets.
+	value += ((target_starting_damage/3 + avg_damage_inflicted) - (1.0-aggression)*avg_damage_taken)/10.0;
+	
+	// If the unit is surrounded and there is no support,
+	// or if the unit is surrounded and the average damage is 0,
+	// the unit skips its sanity check and tries to break free as good as possible.
+	if(!is_surrounded || (support != 0 && avg_damage_taken != 0))
+	{
+>>>>>>> Applying format changes (4 SPACEs to TAB)
 		// Sanity check: if we're putting ourselves at major risk,
 		// and have no chance to kill, and we're not aiding our allies
 		// who are also attacking, then don't do it.
 		if(vulnerability > 50.0 && vulnerability > support*2.0
+<<<<<<< HEAD
 				&& chance_to_kill < 0.02 && aggression < 0.75
 				&& !aas.attack_close(target)) {
 			return -1.0;
@@ -601,51 +569,35 @@ double attack_analysis_strategy1::rating_impl(const attack_analysis& aas, double
 } // end of namespace testing_ai_default
 
 =======
-        << vulnerability << "/" << support << " = " << (vulnerability/std::max<double>(support,0.1)) << "\n";
-		value -= exposure*(1.0-aggression);
+		   && chance_to_kill < 0.02 && aggression < 0.75
+		   && !aas.attack_close(target)) {
+			return -1.0;
+		}
 	}
-    
-	// Prefer to attack already damaged targets.
-	value += ((target_starting_damage/3 + avg_damage_inflicted) - (1.0-aggression)*avg_damage_taken)/10.0;
-    
-    // If the unit is surrounded and there is no support,
-    // or if the unit is surrounded and the average damage is 0,
-    // the unit skips its sanity check and tries to break free as good as possible.
-    if(!is_surrounded || (support != 0 && avg_damage_taken != 0))
-    {
-        // Sanity check: if we're putting ourselves at major risk,
-        // and have no chance to kill, and we're not aiding our allies
-        // who are also attacking, then don't do it.
-        if(vulnerability > 50.0 && vulnerability > support*2.0
-           && chance_to_kill < 0.02 && aggression < 0.75
-           && !aas.attack_close(target)) {
-            return -1.0;
-        }
-    }
-    
+	
 	if(!leader_threat && vulnerability*terrain_quality > 0.0) {
 		value *= support/(vulnerability*terrain_quality);
 	}
-    
+	
 	value /= ((resources_used/2) + (resources_used/2)*terrain_quality);
-    
+	
 	if(leader_threat) {
 		value *= 5.0;
 	}
-    
+	
 	LOG_AI << "attack on " << target << ": attackers: " << movements.size()
-    << " value: " << value << " chance to kill: " << chance_to_kill
-    << " damage inflicted: " << avg_damage_inflicted
-    << " damage taken: " << avg_damage_taken
-    << " vulnerability: " << vulnerability
-    << " support: " << support
-    << " quality: " << terrain_quality
-    << " alternative quality: " << alternative_terrain_quality << "\n";
-    
+	<< " value: " << value << " chance to kill: " << chance_to_kill
+	<< " damage inflicted: " << avg_damage_inflicted
+	<< " damage taken: " << avg_damage_taken
+	<< " vulnerability: " << vulnerability
+	<< " support: " << support
+	<< " quality: " << terrain_quality
+	<< " alternative quality: " << alternative_terrain_quality << "\n";
+	
 	return value;
 }
-    
+	
 } // end of namespace testing_ai_default
-    
->>>>>>> AI varaint is implemented based on master 1.11.4
+	
+>>>>>>> Applying format changes (4 SPACEs to TAB)
 } // end of namespace ai
