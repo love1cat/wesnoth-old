@@ -27,7 +27,7 @@ namespace ai {
 	
 namespace testing_ai_default {
 	
-class attack_analysis_strategy : public analysis_strategy{
+class attack_analysis_strategy : public analysis_strategy {
 public:
 	virtual void analyze_impl(attack_analysis& aas,
 							  const gamemap& map, 

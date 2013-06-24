@@ -29,7 +29,7 @@ namespace testing_ai_default {
 	
 // analysis strategy component for default strategy pointer operations
 template<class T>
-class analysis_strategy_component{
+class analysis_strategy_component {
 public:
 	typedef boost::shared_ptr<T> strategy_ptr;
 	const strategy_ptr& get_strategy() const {
