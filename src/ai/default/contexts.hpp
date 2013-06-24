@@ -147,7 +147,7 @@ public:
 	std::vector<int> movements_target_ids;
 	
 	// struct for saving analysis results of different targets
-	struct analysis_result{
+	struct analysis_result {
 		analysis_result () :
 		target(),
 		movements(),
