@@ -24,10 +24,13 @@
 #include "analysis_strategy.hpp"
 
 namespace ai {
-<<<<<<< HEAD
 
 namespace testing_ai_default {
+<<<<<<< HEAD
 
+=======
+	
+>>>>>>> Minor format improvements
 class attack_analysis_strategy : public analysis_strategy {
 public:
 	virtual void analyze_impl(attack_analysis& aas,
@@ -39,29 +42,12 @@ public:
 							  const move_map& enemy_dstsrc,
 							  double aggression) const = 0;
 
-=======
-	
-namespace testing_ai_default {
-	
-class attack_analysis_strategy : public analysis_strategy{
-public:
-	virtual void analyze_impl(attack_analysis& aas,
-							  const gamemap& map, 
-							  unit_map& units,
-							  const readonly_context& ai_obj,
-							  const move_map& dstsrc, 
-							  const move_map& srcdst,
-							  const move_map& enemy_dstsrc, 
-							  double aggression) const = 0;
-	
->>>>>>> Applying format changes (4 SPACEs to TAB)
 	virtual double rating_impl(const attack_analysis& aas, double aggression, const readonly_context& ai_obj) const = 0;
 };
 
 class attack_analysis_strategy1 : public attack_analysis_strategy {
 public:
 	virtual void analyze_impl(attack_analysis& aas,
-<<<<<<< HEAD
 							  const gamemap& map,
 							  unit_map& units,
 							  const readonly_context& ai_obj,
@@ -75,21 +61,6 @@ public:
 
 } // end of namespace testing_ai_default
 
-=======
-							  const gamemap& map, 
-							  unit_map& units,
-							  const readonly_context& ai_obj,
-							  const move_map& dstsrc, 
-							  const move_map& srcdst,
-							  const move_map& enemy_dstsrc, 
-							  double aggression) const;
-	
-	virtual double rating_impl(const attack_analysis& aas, double aggression, const readonly_context& ai_obj) const;
-};
-	
-} // end of namespace testing_ai_default
-	
->>>>>>> Applying format changes (4 SPACEs to TAB)
 } // end of namespace ai
 
 #endif
