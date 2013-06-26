@@ -72,6 +72,7 @@
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
 		A14ACFE1175D3C5D00B2FCE5 /* attack_analysis_strategy.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A14ACFDB175D3C5D00B2FCE5 /* attack_analysis_strategy.cpp */; };
 		A14ACFE3175D3C5D00B2FCE5 /* target_analysis_strategy.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A14ACFDF175D3C5D00B2FCE5 /* target_analysis_strategy.cpp */; };
+		A1C45F1D177A8B190090EB97 /* multi_power_projection.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1C45F1B177A8B180090EB97 /* multi_power_projection.cpp */; };
 		B504B94C1284C06B00261FE9 /* tips.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B504B94A1284C06B00261FE9 /* tips.cpp */; };
 		B504B94D1284C06B00261FE9 /* tips.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B504B94A1284C06B00261FE9 /* tips.cpp */; };
 		B508D13F10013BF900B12852 /* Growl.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B508D13E10013BF900B12852 /* Growl.framework */; };
@@ -1145,6 +1146,8 @@
 		A14ACFDC175D3C5D00B2FCE5 /* attack_analysis_strategy.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = attack_analysis_strategy.hpp; sourceTree = "<group>"; };
 		A14ACFDF175D3C5D00B2FCE5 /* target_analysis_strategy.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = target_analysis_strategy.cpp; sourceTree = "<group>"; };
 		A14ACFE0175D3C5D00B2FCE5 /* target_analysis_strategy.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = target_analysis_strategy.hpp; sourceTree = "<group>"; };
+		A1C45F1B177A8B180090EB97 /* multi_power_projection.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = multi_power_projection.cpp; sourceTree = "<group>"; };
+		A1C45F1C177A8B180090EB97 /* multi_power_projection.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = multi_power_projection.hpp; sourceTree = "<group>"; };
 		B504B94A1284C06B00261FE9 /* tips.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = tips.cpp; sourceTree = "<group>"; };
 		B504B94B1284C06B00261FE9 /* tips.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = tips.hpp; sourceTree = "<group>"; };
 		B508D13E10013BF900B12852 /* Growl.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Growl.framework; path = lib/Growl.framework; sourceTree = "<group>"; };
@@ -2939,6 +2942,8 @@
 				B54AC6C40FEA9EB5006F6FBD /* stage_fallback.hpp */,
 				B54AC6C50FEA9EB5006F6FBD /* stage_rca.cpp */,
 				B54AC6C60FEA9EB5006F6FBD /* stage_rca.hpp */,
+				A1C45F1B177A8B180090EB97 /* multi_power_projection.cpp */,
+				A1C45F1C177A8B180090EB97 /* multi_power_projection.hpp */,
 			);
 			path = testing;
 			sourceTree = "<group>";
@@ -4275,6 +4280,7 @@
 				62CC8E531774C4F800C16B75 /* mouse_action_select.cpp in Sources */,
 				A14ACFE1175D3C5D00B2FCE5 /* attack_analysis_strategy.cpp in Sources */,
 				A14ACFE3175D3C5D00B2FCE5 /* target_analysis_strategy.cpp in Sources */,
+				A1C45F1D177A8B190090EB97 /* multi_power_projection.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
