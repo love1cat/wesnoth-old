@@ -25,26 +25,16 @@
 #include "analysis_strategy.hpp"
 
 namespace ai {
-<<<<<<< HEAD
 
 namespace testing_ai_default {
 
 class aspect_attacks;
 
 class target_analysis_strategy : public analysis_strategy {
-=======
-	
-namespace testing_ai_default {
-
-class aspect_attacks;
-	
-class target_analysis_strategy : public analysis_strategy{
->>>>>>> Applying format changes (4 SPACEs to TAB)
 public:
 	virtual boost::shared_ptr<attacks_vector> analyze_targets_impl(const aspect_attacks& asp_atks) const = 0;
 };
 
-<<<<<<< HEAD
 class target_analysis_strategy1 : public target_analysis_strategy {
 public:
 	target_analysis_strategy1(const config& cfg);
@@ -53,16 +43,6 @@ public:
 protected:
 	virtual double rate_terrain(const unit& u, const map_location& loc) const;
 
-=======
-class target_analysis_strategy1 : public target_analysis_strategy { 
-public:	
-	target_analysis_strategy1(const config& cfg);
-	virtual boost::shared_ptr<attacks_vector> analyze_targets_impl(const aspect_attacks& asp_atks) const;
-	
-protected:
-	virtual double rate_terrain(const unit& u, const map_location& loc) const;
-	
->>>>>>> Applying format changes (4 SPACEs to TAB)
 	virtual void do_attack_analysis(const map_location& loc,
 									const move_map& srcdst,
 									const move_map& dstsrc,
@@ -71,40 +51,25 @@ protected:
 									const move_map& enemy_srcdst,
 									const move_map& enemy_dstsrc,
 									const map_location* tiles,
-<<<<<<< HEAD
 									const team& current_team,
-=======
-									const team &current_team,
->>>>>>> Applying format changes (4 SPACEs to TAB)
 									const readonly_context* ai_ptr,
 									bool* used_locations,
 									std::vector<map_location>& units,
 									std::vector<attack_analysis>& result,
-<<<<<<< HEAD
 									attack_analysis& cur_analysis) const;
 
 	virtual void set_default_attack_analysis_strategy(const config& target_anaysis_strategy_config);
+<<<<<<< HEAD
 	virtual double power_projection(const readonly_context* ai_ptr, const std::vector<map_location>& locs, const move_map& dstsrc) const;
-
-	config target_analysis_strategy_cfg_;
-	config attack_analysis_strategy_cfg_;
-};
-
-} // end of namespace testing_ai_default
-
 =======
-									attack_analysis& cur_analysis
-) const;
-	
-	virtual void set_default_attack_analysis_strategy(const config& target_anaysis_strategy_config);
-	
+>>>>>>> Created new files for improved power projection and
+
 	config target_analysis_strategy_cfg_;
 	config attack_analysis_strategy_cfg_;
 };
-	
+
 } // end of namespace testing_ai_default
-	
->>>>>>> Applying format changes (4 SPACEs to TAB)
+
 } // end of namespace ai
 
 #endif
