@@ -347,7 +347,10 @@ void target_analysis_strategy1::do_attack_analysis(
 		}
 	}
 }
-
+	
+double target_analysis_strategy1::power_projection(const readonly_context* ai_ptr, const std::vector<map_location>& locs, const move_map& dstsrc) const{
+	return ai_ptr->power_projection(locs[0], dstsrc);
+}
 
 double target_analysis_strategy1::rate_terrain(const unit& u, const map_location& loc) const {
 	gamemap& map_ = *resources::game_map;

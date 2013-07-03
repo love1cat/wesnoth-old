@@ -20,6 +20,7 @@
 #ifndef AI_TESTING_TARGET_ANALYSIS_STRATEGY_HPP
 #define AI_TESTING_TARGET_ANALYSIS_STRATEGY_HPP
 
+#include <vector>
 #include "../interface.hpp"
 #include "analysis_strategy.hpp"
 
@@ -58,6 +59,7 @@ protected:
 									attack_analysis& cur_analysis) const;
 
 	virtual void set_default_attack_analysis_strategy(const config& target_anaysis_strategy_config);
+	virtual double power_projection(const readonly_context* ai_ptr, const std::vector<map_location>& locs, const move_map& dstsrc) const;
 
 	config target_analysis_strategy_cfg_;
 	config attack_analysis_strategy_cfg_;
