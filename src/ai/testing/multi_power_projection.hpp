@@ -22,6 +22,7 @@
 
 #include "target_analysis_strategy.hpp"
 
+<<<<<<< HEAD
 class unit;
 
 namespace ai {
@@ -34,6 +35,15 @@ class multi_power_projection_strategy : public target_analysis_strategy1 {
 	multi_power_projection_strategy(const config& cfg, const aspect_attacks *aspect_attacks_ptr);
 	virtual double power_projection(const std::vector<map_location>& locs, const move_map& dstsrc) const;
 	virtual int rate_unit_on_tile(const unit& un, const map_location& tile) const;
+=======
+namespace ai {
+
+namespace testing_ai_default {
+
+class multi_power_projection_strategy : public target_analysis_strategy1 {
+	multi_power_projection_strategy(const config& cfg);
+	virtual double power_projection(const readonly_context* ai_ptr, const std::vector<map_location>& locs, const move_map& dstsrc) const;
+>>>>>>> d5a84022a01f3993039b9144be693add1eecbda1
 };
 	
 } // end of namespace testing_ai_default
