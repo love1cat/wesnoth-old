@@ -73,6 +73,14 @@
 		A14ACFE1175D3C5D00B2FCE5 /* attack_analysis_strategy.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A14ACFDB175D3C5D00B2FCE5 /* attack_analysis_strategy.cpp */; };
 		A14ACFE3175D3C5D00B2FCE5 /* target_analysis_strategy.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A14ACFDF175D3C5D00B2FCE5 /* target_analysis_strategy.cpp */; };
 		A16DA26617988141004C0433 /* max_weight_match.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A16DA26417988141004C0433 /* max_weight_match.cpp */; };
+		A1861E04179B99220089C394 /* cavegen.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1861DFC179B99220089C394 /* cavegen.cpp */; };
+		A1861E05179B99220089C394 /* map_create.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1861DFE179B99220089C394 /* map_create.cpp */; };
+		A1861E06179B99220089C394 /* mapgen_dialog.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1861E00179B99220089C394 /* mapgen_dialog.cpp */; };
+		A1861E07179B99220089C394 /* mapgen.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1861E02179B99220089C394 /* mapgen.cpp */; };
+		A1861E12179B99500089C394 /* ya_mapgen.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1861E09179B99500089C394 /* ya_mapgen.cpp */; };
+		A1861E13179B99500089C394 /* yamg_hex.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1861E0C179B99500089C394 /* yamg_hex.cpp */; };
+		A1861E14179B99500089C394 /* yamg_hexheap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1861E0E179B99500089C394 /* yamg_hexheap.cpp */; };
+		A1861E15179B99500089C394 /* yamg_params.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1861E10179B99500089C394 /* yamg_params.cpp */; };
 		A1C45F1D177A8B190090EB97 /* multi_power_projection.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1C45F1B177A8B180090EB97 /* multi_power_projection.cpp */; };
 		B504B94C1284C06B00261FE9 /* tips.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B504B94A1284C06B00261FE9 /* tips.cpp */; };
 		B504B94D1284C06B00261FE9 /* tips.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B504B94A1284C06B00261FE9 /* tips.cpp */; };
@@ -343,11 +351,8 @@
 		B5599B260EC62181008DD061 /* menu_events.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B55999EE0EC62181008DD061 /* menu_events.cpp */; };
 		B5599B270EC62181008DD061 /* md5.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B55999F00EC62181008DD061 /* md5.cpp */; };
 		B5599B280EC62181008DD061 /* marked-up_text.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B55999F20EC62181008DD061 /* marked-up_text.cpp */; };
-		B5599B290EC62181008DD061 /* mapgen_dialog.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B55999F40EC62181008DD061 /* mapgen_dialog.cpp */; };
-		B5599B2A0EC62181008DD061 /* mapgen.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B55999F60EC62181008DD061 /* mapgen.cpp */; };
 		B5599B2B0EC62181008DD061 /* map_location.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B55999F90EC62181008DD061 /* map_location.cpp */; };
 		B5599B2C0EC62181008DD061 /* map_label.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B55999FB0EC62181008DD061 /* map_label.cpp */; };
-		B5599B2D0EC62181008DD061 /* map_create.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B55999FE0EC62181008DD061 /* map_create.cpp */; };
 		B5599B2E0EC62181008DD061 /* map.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B5599A000EC62181008DD061 /* map.cpp */; };
 		B5599B2F0EC62181008DD061 /* log.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B5599A020EC62181008DD061 /* log.cpp */; };
 		B5599B310EC62181008DD061 /* loadscreen.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B5599A050EC62181008DD061 /* loadscreen.cpp */; };
@@ -385,7 +390,6 @@
 		B5599B7D0EC62181008DD061 /* config.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B5599AA80EC62181008DD061 /* config.cpp */; };
 		B5599B7E0EC62181008DD061 /* color_range.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B5599AAA0EC62181008DD061 /* color_range.cpp */; };
 		B5599B7F0EC62181008DD061 /* clipboard.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B5599AAC0EC62181008DD061 /* clipboard.cpp */; };
-		B5599B800EC62181008DD061 /* cavegen.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B5599AAE0EC62181008DD061 /* cavegen.cpp */; };
 		B5599B810EC62181008DD061 /* callable_objects.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B5599AB00EC62181008DD061 /* callable_objects.cpp */; };
 		B5599B830EC62181008DD061 /* animated_game.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B5599AB50EC62181008DD061 /* animated_game.cpp */; };
 		B5599B8B0EC62181008DD061 /* about.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B5599AC60EC62181008DD061 /* about.cpp */; };
@@ -517,7 +521,6 @@
 		B597C54D0FACD6CA00CE81F5 /* floating_textbox.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B5599A920EC62181008DD061 /* floating_textbox.cpp */; };
 		B597C5500FACD6CA00CE81F5 /* drop_target.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B559994B0EC62181008DD061 /* drop_target.cpp */; };
 		B597C5510FACD6CA00CE81F5 /* events.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B5599A970EC62181008DD061 /* events.cpp */; };
-		B597C5520FACD6CA00CE81F5 /* map_create.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B55999FE0EC62181008DD061 /* map_create.cpp */; };
 		B597C5530FACD6CA00CE81F5 /* team.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B55999970EC62181008DD061 /* team.cpp */; };
 		B597C5540FACD6CA00CE81F5 /* preprocessor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B55999AD0EC62181008DD061 /* preprocessor.cpp */; };
 		B597C5550FACD6CA00CE81F5 /* menu_style.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B55999530EC62181008DD061 /* menu_style.cpp */; };
@@ -563,10 +566,8 @@
 		B597C5860FACD6CA00CE81F5 /* unit_frame.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B55999770EC62181008DD061 /* unit_frame.cpp */; };
 		B597C5880FACD6CA00CE81F5 /* editor_generate_map.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B5A9BCB40ECA805A002BE442 /* editor_generate_map.cpp */; };
 		B597C5890FACD6CA00CE81F5 /* statistics_dialog.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B55999990EC62181008DD061 /* statistics_dialog.cpp */; };
-		B597C58B0FACD6CA00CE81F5 /* mapgen.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B55999F60EC62181008DD061 /* mapgen.cpp */; };
 		B597C58C0FACD6CA00CE81F5 /* soundsource.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B559999D0EC62181008DD061 /* soundsource.cpp */; };
 		B597C58D0FACD6CA00CE81F5 /* tokenizer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B55999B10EC62181008DD061 /* tokenizer.cpp */; };
-		B597C58E0FACD6CA00CE81F5 /* mapgen_dialog.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B55999F40EC62181008DD061 /* mapgen_dialog.cpp */; };
 		B597C58F0FACD6CA00CE81F5 /* thread.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B559998B0EC62181008DD061 /* thread.cpp */; };
 		B597C5900FACD6CA00CE81F5 /* map_label.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B55999FB0EC62181008DD061 /* map_label.cpp */; };
 		B597C5910FACD6CA00CE81F5 /* multiplayer_wait.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B55999DC0EC62181008DD061 /* multiplayer_wait.cpp */; };
@@ -657,7 +658,6 @@
 		B597C5FD0FACD6CA00CE81F5 /* gamestatus.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B5599A760EC62181008DD061 /* gamestatus.cpp */; };
 		B597C5FE0FACD6CA00CE81F5 /* config_cache.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B5599AA40EC62181008DD061 /* config_cache.cpp */; };
 		B597C5FF0FACD6CA00CE81F5 /* unit_types.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B55999710EC62181008DD061 /* unit_types.cpp */; };
-		B597C6000FACD6CA00CE81F5 /* cavegen.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B5599AAE0EC62181008DD061 /* cavegen.cpp */; };
 		B597C6030FACD6CA00CE81F5 /* unit_display.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B55999790EC62181008DD061 /* unit_display.cpp */; };
 		B597C65A0FACDDE800CE81F5 /* button.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B55999450EC62181008DD061 /* button.cpp */; };
 		B597C6F30FACDE1100CE81F5 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
@@ -1149,6 +1149,23 @@
 		A14ACFE0175D3C5D00B2FCE5 /* target_analysis_strategy.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = target_analysis_strategy.hpp; sourceTree = "<group>"; };
 		A16DA26317988123004C0433 /* max_weight_match.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = max_weight_match.hpp; sourceTree = "<group>"; };
 		A16DA26417988141004C0433 /* max_weight_match.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = max_weight_match.cpp; sourceTree = "<group>"; };
+		A1861DFC179B99220089C394 /* cavegen.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = cavegen.cpp; path = generators/cavegen.cpp; sourceTree = "<group>"; };
+		A1861DFD179B99220089C394 /* cavegen.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = cavegen.hpp; path = generators/cavegen.hpp; sourceTree = "<group>"; };
+		A1861DFE179B99220089C394 /* map_create.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = map_create.cpp; path = generators/map_create.cpp; sourceTree = "<group>"; };
+		A1861DFF179B99220089C394 /* map_create.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = map_create.hpp; path = generators/map_create.hpp; sourceTree = "<group>"; };
+		A1861E00179B99220089C394 /* mapgen_dialog.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = mapgen_dialog.cpp; path = generators/mapgen_dialog.cpp; sourceTree = "<group>"; };
+		A1861E01179B99220089C394 /* mapgen_dialog.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = mapgen_dialog.hpp; path = generators/mapgen_dialog.hpp; sourceTree = "<group>"; };
+		A1861E02179B99220089C394 /* mapgen.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = mapgen.cpp; path = generators/mapgen.cpp; sourceTree = "<group>"; };
+		A1861E03179B99220089C394 /* mapgen.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = mapgen.hpp; path = generators/mapgen.hpp; sourceTree = "<group>"; };
+		A1861E09179B99500089C394 /* ya_mapgen.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ya_mapgen.cpp; sourceTree = "<group>"; };
+		A1861E0A179B99500089C394 /* ya_mapgen.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ya_mapgen.hpp; sourceTree = "<group>"; };
+		A1861E0B179B99500089C394 /* yamg_decls.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = yamg_decls.hpp; sourceTree = "<group>"; };
+		A1861E0C179B99500089C394 /* yamg_hex.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = yamg_hex.cpp; sourceTree = "<group>"; };
+		A1861E0D179B99500089C394 /* yamg_hex.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = yamg_hex.hpp; sourceTree = "<group>"; };
+		A1861E0E179B99500089C394 /* yamg_hexheap.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = yamg_hexheap.cpp; sourceTree = "<group>"; };
+		A1861E0F179B99500089C394 /* yamg_hexheap.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = yamg_hexheap.hpp; sourceTree = "<group>"; };
+		A1861E10179B99500089C394 /* yamg_params.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = yamg_params.cpp; sourceTree = "<group>"; };
+		A1861E11179B99500089C394 /* yamg_params.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = yamg_params.hpp; sourceTree = "<group>"; };
 		A1C45F1B177A8B180090EB97 /* multi_power_projection.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = multi_power_projection.cpp; sourceTree = "<group>"; };
 		A1C45F1C177A8B180090EB97 /* multi_power_projection.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = multi_power_projection.hpp; sourceTree = "<group>"; };
 		B504B94A1284C06B00261FE9 /* tips.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = tips.cpp; sourceTree = "<group>"; };
@@ -1525,18 +1542,12 @@
 		B55999F00EC62181008DD061 /* md5.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = md5.cpp; path = ../src/md5.cpp; sourceTree = "<group>"; };
 		B55999F10EC62181008DD061 /* marked-up_text.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = "marked-up_text.hpp"; path = "../src/marked-up_text.hpp"; sourceTree = "<group>"; };
 		B55999F20EC62181008DD061 /* marked-up_text.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = "marked-up_text.cpp"; path = "../src/marked-up_text.cpp"; sourceTree = "<group>"; };
-		B55999F30EC62181008DD061 /* mapgen_dialog.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = mapgen_dialog.hpp; path = ../src/mapgen_dialog.hpp; sourceTree = "<group>"; };
-		B55999F40EC62181008DD061 /* mapgen_dialog.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = mapgen_dialog.cpp; path = ../src/mapgen_dialog.cpp; sourceTree = "<group>"; };
-		B55999F50EC62181008DD061 /* mapgen.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = mapgen.hpp; path = ../src/mapgen.hpp; sourceTree = "<group>"; };
-		B55999F60EC62181008DD061 /* mapgen.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = mapgen.cpp; path = ../src/mapgen.cpp; sourceTree = "<group>"; };
 		B55999F70EC62181008DD061 /* map_utils.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = map_utils.hpp; path = ../src/map_utils.hpp; sourceTree = "<group>"; };
 		B55999F80EC62181008DD061 /* map_location.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = map_location.hpp; path = ../src/map_location.hpp; sourceTree = "<group>"; };
 		B55999F90EC62181008DD061 /* map_location.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = map_location.cpp; path = ../src/map_location.cpp; sourceTree = "<group>"; };
 		B55999FA0EC62181008DD061 /* map_label.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = map_label.hpp; path = ../src/map_label.hpp; sourceTree = "<group>"; };
 		B55999FB0EC62181008DD061 /* map_label.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = map_label.cpp; path = ../src/map_label.cpp; sourceTree = "<group>"; };
 		B55999FC0EC62181008DD061 /* map_exception.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = map_exception.hpp; path = ../src/map_exception.hpp; sourceTree = "<group>"; };
-		B55999FD0EC62181008DD061 /* map_create.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = map_create.hpp; path = ../src/map_create.hpp; sourceTree = "<group>"; };
-		B55999FE0EC62181008DD061 /* map_create.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = map_create.cpp; path = ../src/map_create.cpp; sourceTree = "<group>"; };
 		B55999FF0EC62181008DD061 /* map.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = map.hpp; path = ../src/map.hpp; sourceTree = "<group>"; };
 		B5599A000EC62181008DD061 /* map.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = map.cpp; path = ../src/map.cpp; sourceTree = "<group>"; };
 		B5599A010EC62181008DD061 /* log.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = log.hpp; path = ../src/log.hpp; sourceTree = "<group>"; };
@@ -1615,8 +1626,6 @@
 		B5599AAA0EC62181008DD061 /* color_range.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = color_range.cpp; path = ../src/color_range.cpp; sourceTree = "<group>"; };
 		B5599AAB0EC62181008DD061 /* clipboard.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = clipboard.hpp; path = ../src/clipboard.hpp; sourceTree = "<group>"; };
 		B5599AAC0EC62181008DD061 /* clipboard.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = clipboard.cpp; path = ../src/clipboard.cpp; sourceTree = "<group>"; };
-		B5599AAD0EC62181008DD061 /* cavegen.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = cavegen.hpp; path = ../src/cavegen.hpp; sourceTree = "<group>"; };
-		B5599AAE0EC62181008DD061 /* cavegen.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = cavegen.cpp; path = ../src/cavegen.cpp; sourceTree = "<group>"; };
 		B5599AAF0EC62181008DD061 /* callable_objects.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = callable_objects.hpp; path = ../src/callable_objects.hpp; sourceTree = "<group>"; };
 		B5599AB00EC62181008DD061 /* callable_objects.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = callable_objects.cpp; path = ../src/callable_objects.cpp; sourceTree = "<group>"; };
 		B5599AB10EC62181008DD061 /* builder.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = builder.hpp; path = ../src/builder.hpp; sourceTree = "<group>"; };
@@ -2460,18 +2469,13 @@
 				B55999F00EC62181008DD061 /* md5.cpp */,
 				B55999F10EC62181008DD061 /* marked-up_text.hpp */,
 				B55999F20EC62181008DD061 /* marked-up_text.cpp */,
-				B55999F30EC62181008DD061 /* mapgen_dialog.hpp */,
-				B55999F40EC62181008DD061 /* mapgen_dialog.cpp */,
-				B55999F50EC62181008DD061 /* mapgen.hpp */,
-				B55999F60EC62181008DD061 /* mapgen.cpp */,
 				B55999F70EC62181008DD061 /* map_utils.hpp */,
 				B55999F80EC62181008DD061 /* map_location.hpp */,
 				B55999F90EC62181008DD061 /* map_location.cpp */,
 				B55999FA0EC62181008DD061 /* map_label.hpp */,
 				B55999FB0EC62181008DD061 /* map_label.cpp */,
 				B55999FC0EC62181008DD061 /* map_exception.hpp */,
-				B55999FD0EC62181008DD061 /* map_create.hpp */,
-				B55999FE0EC62181008DD061 /* map_create.cpp */,
+				A1861DFB179B97EB0089C394 /* generators */,
 				B55999FF0EC62181008DD061 /* map.hpp */,
 				B5599A000EC62181008DD061 /* map.cpp */,
 				B5599A010EC62181008DD061 /* log.hpp */,
@@ -2551,8 +2555,6 @@
 				B5599AAA0EC62181008DD061 /* color_range.cpp */,
 				B5599AAB0EC62181008DD061 /* clipboard.hpp */,
 				B5599AAC0EC62181008DD061 /* clipboard.cpp */,
-				B5599AAD0EC62181008DD061 /* cavegen.hpp */,
-				B5599AAE0EC62181008DD061 /* cavegen.cpp */,
 				B5599AAF0EC62181008DD061 /* callable_objects.hpp */,
 				B5599AB00EC62181008DD061 /* callable_objects.cpp */,
 				B5599AB10EC62181008DD061 /* builder.hpp */,
@@ -2736,6 +2738,39 @@
 				62D24F2C1519982500350848 /* editor_toolkit.hpp */,
 			);
 			path = toolkit;
+			sourceTree = "<group>";
+		};
+		A1861DFB179B97EB0089C394 /* generators */ = {
+			isa = PBXGroup;
+			children = (
+				A1861E08179B99500089C394 /* yamg */,
+				A1861DFC179B99220089C394 /* cavegen.cpp */,
+				A1861DFD179B99220089C394 /* cavegen.hpp */,
+				A1861DFE179B99220089C394 /* map_create.cpp */,
+				A1861DFF179B99220089C394 /* map_create.hpp */,
+				A1861E00179B99220089C394 /* mapgen_dialog.cpp */,
+				A1861E01179B99220089C394 /* mapgen_dialog.hpp */,
+				A1861E02179B99220089C394 /* mapgen.cpp */,
+				A1861E03179B99220089C394 /* mapgen.hpp */,
+			);
+			name = generators;
+			sourceTree = "<group>";
+		};
+		A1861E08179B99500089C394 /* yamg */ = {
+			isa = PBXGroup;
+			children = (
+				A1861E09179B99500089C394 /* ya_mapgen.cpp */,
+				A1861E0A179B99500089C394 /* ya_mapgen.hpp */,
+				A1861E0B179B99500089C394 /* yamg_decls.hpp */,
+				A1861E0C179B99500089C394 /* yamg_hex.cpp */,
+				A1861E0D179B99500089C394 /* yamg_hex.hpp */,
+				A1861E0E179B99500089C394 /* yamg_hexheap.cpp */,
+				A1861E0F179B99500089C394 /* yamg_hexheap.hpp */,
+				A1861E10179B99500089C394 /* yamg_params.cpp */,
+				A1861E11179B99500089C394 /* yamg_params.hpp */,
+			);
+			name = yamg;
+			path = generators/yamg;
 			sourceTree = "<group>";
 		};
 		B52EE8FD12135AC300CFBDAB /* whiteboard */ = {
@@ -3904,11 +3939,8 @@
 				B5599B260EC62181008DD061 /* menu_events.cpp in Sources */,
 				B5599B270EC62181008DD061 /* md5.cpp in Sources */,
 				B5599B280EC62181008DD061 /* marked-up_text.cpp in Sources */,
-				B5599B290EC62181008DD061 /* mapgen_dialog.cpp in Sources */,
-				B5599B2A0EC62181008DD061 /* mapgen.cpp in Sources */,
 				B5599B2B0EC62181008DD061 /* map_location.cpp in Sources */,
 				B5599B2C0EC62181008DD061 /* map_label.cpp in Sources */,
-				B5599B2D0EC62181008DD061 /* map_create.cpp in Sources */,
 				B5599B2E0EC62181008DD061 /* map.cpp in Sources */,
 				B5599B2F0EC62181008DD061 /* log.cpp in Sources */,
 				B5599B310EC62181008DD061 /* loadscreen.cpp in Sources */,
@@ -3946,7 +3978,6 @@
 				B5599B7D0EC62181008DD061 /* config.cpp in Sources */,
 				B5599B7E0EC62181008DD061 /* color_range.cpp in Sources */,
 				B5599B7F0EC62181008DD061 /* clipboard.cpp in Sources */,
-				B5599B800EC62181008DD061 /* cavegen.cpp in Sources */,
 				B5599B810EC62181008DD061 /* callable_objects.cpp in Sources */,
 				B5599B830EC62181008DD061 /* animated_game.cpp in Sources */,
 				B5599B8B0EC62181008DD061 /* about.cpp in Sources */,
@@ -4287,6 +4318,14 @@
 				A14ACFE3175D3C5D00B2FCE5 /* target_analysis_strategy.cpp in Sources */,
 				A1C45F1D177A8B190090EB97 /* multi_power_projection.cpp in Sources */,
 				A16DA26617988141004C0433 /* max_weight_match.cpp in Sources */,
+				A1861E04179B99220089C394 /* cavegen.cpp in Sources */,
+				A1861E05179B99220089C394 /* map_create.cpp in Sources */,
+				A1861E06179B99220089C394 /* mapgen_dialog.cpp in Sources */,
+				A1861E07179B99220089C394 /* mapgen.cpp in Sources */,
+				A1861E12179B99500089C394 /* ya_mapgen.cpp in Sources */,
+				A1861E13179B99500089C394 /* yamg_hex.cpp in Sources */,
+				A1861E14179B99500089C394 /* yamg_hexheap.cpp in Sources */,
+				A1861E15179B99500089C394 /* yamg_params.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4335,7 +4374,6 @@
 				B597C54D0FACD6CA00CE81F5 /* floating_textbox.cpp in Sources */,
 				B597C5500FACD6CA00CE81F5 /* drop_target.cpp in Sources */,
 				B597C5510FACD6CA00CE81F5 /* events.cpp in Sources */,
-				B597C5520FACD6CA00CE81F5 /* map_create.cpp in Sources */,
 				B597C5530FACD6CA00CE81F5 /* team.cpp in Sources */,
 				B597C5540FACD6CA00CE81F5 /* preprocessor.cpp in Sources */,
 				B597C5550FACD6CA00CE81F5 /* menu_style.cpp in Sources */,
@@ -4381,10 +4419,8 @@
 				B597C5860FACD6CA00CE81F5 /* unit_frame.cpp in Sources */,
 				B597C5880FACD6CA00CE81F5 /* editor_generate_map.cpp in Sources */,
 				B597C5890FACD6CA00CE81F5 /* statistics_dialog.cpp in Sources */,
-				B597C58B0FACD6CA00CE81F5 /* mapgen.cpp in Sources */,
 				B597C58C0FACD6CA00CE81F5 /* soundsource.cpp in Sources */,
 				B597C58D0FACD6CA00CE81F5 /* tokenizer.cpp in Sources */,
-				B597C58E0FACD6CA00CE81F5 /* mapgen_dialog.cpp in Sources */,
 				B597C58F0FACD6CA00CE81F5 /* thread.cpp in Sources */,
 				B597C5900FACD6CA00CE81F5 /* map_label.cpp in Sources */,
 				B597C5910FACD6CA00CE81F5 /* multiplayer_wait.cpp in Sources */,
@@ -4475,7 +4511,6 @@
 				B597C5FD0FACD6CA00CE81F5 /* gamestatus.cpp in Sources */,
 				B597C5FE0FACD6CA00CE81F5 /* config_cache.cpp in Sources */,
 				B597C5FF0FACD6CA00CE81F5 /* unit_types.cpp in Sources */,
-				B597C6000FACD6CA00CE81F5 /* cavegen.cpp in Sources */,
 				B597C6030FACD6CA00CE81F5 /* unit_display.cpp in Sources */,
 				B597C65A0FACDDE800CE81F5 /* button.cpp in Sources */,
 				B597C71D0FACE4A600CE81F5 /* slider.cpp in Sources */,
