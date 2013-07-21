@@ -71,7 +71,7 @@ void aspect_attacks::recalculate() const
 boost::shared_ptr<attacks_vector> aspect_attacks::analyze_targets() const
 {
 	LOG_AI<<"current target analysis strategy is: "<<get_strategy()->get_id()<<std::endl;
-	return get_strategy()->analyze_targets_impl(*this);
+	return get_strategy()->analyze_targets_impl();
 }
 
 
@@ -93,7 +93,7 @@ config aspect_attacks::to_config() const
 aspect_attacks::target_analysis_strategy_ptr aspect_attacks::get_default_strategy() const{
 	LOG_AI << "default target analysis strategy is applied" << std::endl;
 	// set default analysis strategy
-	return target_analysis_strategy_ptr(new target_analysis_strategy1(target_analysis_strategy_cfg_));
+	return target_analysis_strategy_ptr(new target_analysis_strategy1(target_analysis_strategy_cfg_, this));
 }
 
 void aspect_attacks::set_strategy_from_config(const config& target_analysis_strategy_cfg){
@@ -101,7 +101,7 @@ void aspect_attacks::set_strategy_from_config(const config& target_analysis_stra
 	if(target_analysis_strategy_cfg.has_attribute("name")){
 		std::string stra_name = target_analysis_strategy_cfg["name"];
 		if(stra_name == "strategy1"){
-			target_analysis_strategy_ptr stra_ptr= target_analysis_strategy_ptr(new target_analysis_strategy1(target_analysis_strategy_cfg_));
+			target_analysis_strategy_ptr stra_ptr= target_analysis_strategy_ptr(new target_analysis_strategy1(target_analysis_strategy_cfg_, this));
 			set_current_strategy(stra_ptr);
 			LOG_AI << "target_analysis_strategy is set to " << stra_name << " by config" << std::endl;
 		} //TODO: add new strategy (with different name attribute) in "else if" block
