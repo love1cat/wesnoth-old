@@ -29,7 +29,6 @@ namespace testing_ai_default {
 
 const int max_assignment::kUnexist = -1;
 
-<<<<<<< HEAD
 max_assignment::max_assignment(const weight_matrix& weight_mat) {
 	assert(!weight_mat.empty());
 	int left_size = weight_mat.size();
@@ -37,21 +36,11 @@ max_assignment::max_assignment(const weight_matrix& weight_mat) {
 	size_ = left_size > right_size ? left_size : right_size;
 
 	// 2D - weight matrix may have different dimension sizes,
-=======
-max_assignment::max_assignment(const cost_matrix& cost_mat) {
-	assert(!cost_mat.empty());
-	int left_size = cost_mat.size();
-	int right_size = cost_mat[0].size();
-	size_ = left_size > right_size ? left_size : right_size;
-
-	// 2D - cost matrix may have different dimension sizes,
->>>>>>> d5a84022a01f3993039b9144be693add1eecbda1
 	// we adjust it to same dimension size for later
 	// computation
 	if (left_size != right_size) {
 		for (int i = 0; i < size_; ++i) {
 			if (i < left_size) {
-<<<<<<< HEAD
 				std::vector<int> tmp = weight_mat[i];
 				for (int j = tmp.size(); j < size_; ++j) {
 					tmp.push_back(0);
@@ -60,25 +49,11 @@ max_assignment::max_assignment(const cost_matrix& cost_mat) {
 			}
 			else {
 				weight_.push_back(std::vector<int>(size_, 0));
-=======
-				std::vector<int> tmp = cost_mat[i];
-				for (int j = tmp.size(); j < size_; ++j) {
-					tmp.push_back(0);
-				}
-				cost_.push_back(tmp);
-			}
-			else {
-				cost_.push_back(std::vector<int>(size_, 0));
->>>>>>> d5a84022a01f3993039b9144be693add1eecbda1
 			}
 		}
 	}
 	else {
-<<<<<<< HEAD
 		weight_ = weight_mat;
-=======
-		cost_ = cost_mat;
->>>>>>> d5a84022a01f3993039b9144be693add1eecbda1
 	}
 
 	// initialization
@@ -94,10 +69,7 @@ max_assignment::max_assignment(const cost_matrix& cost_mat) {
 	weighted_hungary_routine();
 
 	// save results
-<<<<<<< HEAD
 	weight_sum_ = 0;
-=======
->>>>>>> d5a84022a01f3993039b9144be693add1eecbda1
 	for (int left = 0; left < size_; ++left) {
 		match_.push_back(std::vector<bool>());
 		for (int right = 0; right < size_; ++right) {
@@ -106,25 +78,17 @@ max_assignment::max_assignment(const cost_matrix& cost_mat) {
 		int matched_right = matched_on_right_[left];
 		assert(matched_right < size_);
 		match_[left][matched_right] = true;
-<<<<<<< HEAD
 		weight_sum_ += weight_[left][matched_right];
-=======
->>>>>>> d5a84022a01f3993039b9144be693add1eecbda1
 	}
 }
 
 void max_assignment::update_labels(const std::vector<bool>& right_ismatched,
 								   const std::vector<bool>& left_ismatched,
-<<<<<<< HEAD
 								   std::vector<int>& weight_label_diff,
-=======
-								   std::vector<int>& cost_label_diff,
->>>>>>> d5a84022a01f3993039b9144be693add1eecbda1
 								   std::vector<int>& left_label,
 								   std::vector<int>& right_label) {
 	// find minimum delta for all right vertices
 	// that are not matched.
-<<<<<<< HEAD
 	// delta = min_right {weight_label_diff_}
 	int delta = std::numeric_limits<int>::max();
 	for (int right = 0; right < size_; ++right) {
@@ -135,32 +99,14 @@ void max_assignment::update_labels(const std::vector<bool>& right_ismatched,
 	}
 
 	// update labels and weight_label_diff vector
-=======
-	// delta = min_right {cost_label_diff_}
-	int delta = std::numeric_limits<int>::max();
-	for (int right = 0; right < size_; ++right) {
-		if (!right_ismatched[right] &&
-				cost_label_diff[right] < delta) {
-			delta = cost_label_diff[right];
-		}
-	}
-
-	// update labels and cost_label_diff vector
->>>>>>> d5a84022a01f3993039b9144be693add1eecbda1
 	for (int right = 0; right < size_; ++right) {
 		if (right_ismatched[right]) {
 			right_label[right] += delta;
 		}
 		else {
-<<<<<<< HEAD
 			// update weight label diff since label of
 			// left vertices are changed
 			weight_label_diff[right] -= delta;
-=======
-			// update cost label diff since label of
-			// left vertices are changed
-			cost_label_diff[right] -= delta;
->>>>>>> d5a84022a01f3993039b9144be693add1eecbda1
 		}
 	}
 
@@ -177,20 +123,14 @@ void max_assignment::add_edge_to_equality_graph(const int left,
 		const std::vector<int>& right_label,
 		std::vector<bool>& left_ismatched,
 		std::vector<int>& prev_left,
-<<<<<<< HEAD
 		std::vector<int>& weight_label_diff,
 		std::vector<int>& weight_label_diff_left_vertex) {
-=======
-		std::vector<int>& cost_label_diff,
-		std::vector<int>& cost_label_diff_left_vertex) {
->>>>>>> d5a84022a01f3993039b9144be693add1eecbda1
 	// we need to add left vertex only and
 	// right vertex of the edge can be found
 	// through matched_on_right
 	left_ismatched[left] = true;
 	prev_left[left] = prev_left_vertex;
 
-<<<<<<< HEAD
 	// update weight_label_diff as equality graph
 	// is changed
 	for (int right = 0; right < size_; ++right) {
@@ -198,15 +138,6 @@ void max_assignment::add_edge_to_equality_graph(const int left,
 		if (diff < weight_label_diff[right]) {
 			weight_label_diff[right] = diff;
 			weight_label_diff_left_vertex[right] = left;
-=======
-	// update cost_label_diff as equality graph
-	// is changed
-	for (int right = 0; right < size_; ++right) {
-		int diff = left_label[left] + right_label[right] - cost_[left][right];
-		if (diff < cost_label_diff[right]) {
-			cost_label_diff[right] = diff;
-			cost_label_diff_left_vertex[right] = left;
->>>>>>> d5a84022a01f3993039b9144be693add1eecbda1
 		}
 	}
 }
@@ -214,13 +145,8 @@ void max_assignment::add_edge_to_equality_graph(const int left,
 void max_assignment::do_augment(std::vector<bool>& left_ismatched,
 								std::vector<bool>& right_ismatched,
 								std::vector<int>& prev_left,
-<<<<<<< HEAD
 								std::vector<int>& weight_label_diff,
 								std::vector<int>& weight_label_diff_left_vertex,
-=======
-								std::vector<int>& cost_label_diff,
-								std::vector<int>& cost_label_diff_left_vertex,
->>>>>>> d5a84022a01f3993039b9144be693add1eecbda1
 								int& matched_size,
 								std::vector<int>& left_label,
 								std::vector<int>& right_label) {
@@ -246,7 +172,6 @@ void max_assignment::do_augment(std::vector<bool>& left_ismatched,
 		}
 	}
 
-<<<<<<< HEAD
 	// reset weight_label_diff_
 	for (int right = 0; right < size_; ++right) {
 		weight_label_diff[right] = left_label[left_root] +
@@ -254,15 +179,6 @@ void max_assignment::do_augment(std::vector<bool>& left_ismatched,
 	}
 	std::fill(weight_label_diff_left_vertex.begin(),
 			  weight_label_diff_left_vertex.end(), left_root);
-=======
-	// reset cost_label_diff_
-	for (int right = 0; right < size_; ++right) {
-		cost_label_diff[right] = left_label[left_root] +
-								 right_label[right] - cost_[left_root][right];
-	}
-	std::fill(cost_label_diff_left_vertex.begin(),
-			  cost_label_diff_left_vertex.end(), left_root);
->>>>>>> d5a84022a01f3993039b9144be693add1eecbda1
 
 	// Main routing looking for augmenting path
 	// in equality graph built. If BFS fails, we update
@@ -277,11 +193,7 @@ void max_assignment::do_augment(std::vector<bool>& left_ismatched,
 			left = q.front();
 			q.pop();
 			for (right = 0; right < size_; ++right) {
-<<<<<<< HEAD
 				if (weight_[left][right] == left_label[left] + right_label[right]
-=======
-				if (cost_[left][right] == left_label[left] + right_label[right]
->>>>>>> d5a84022a01f3993039b9144be693add1eecbda1
 						&& !right_ismatched[right]) {
 					if (matched_on_left_[right] == kUnexist) {
 						// right vertex is not matched with left vertex
@@ -299,13 +211,8 @@ void max_assignment::do_augment(std::vector<bool>& left_ismatched,
 											   right_label,
 											   left_ismatched,
 											   prev_left,
-<<<<<<< HEAD
 											   weight_label_diff,
 											   weight_label_diff_left_vertex);
-=======
-											   cost_label_diff,
-											   cost_label_diff_left_vertex);
->>>>>>> d5a84022a01f3993039b9144be693add1eecbda1
 					q.push(matched_on_left_[right]);
 				}
 			}
@@ -320,30 +227,18 @@ void max_assignment::do_augment(std::vector<bool>& left_ismatched,
 			// we update labels and equality graph
 			update_labels(right_ismatched,
 						  left_ismatched,
-<<<<<<< HEAD
 						  weight_label_diff,
-=======
-						  cost_label_diff,
->>>>>>> d5a84022a01f3993039b9144be693add1eecbda1
 						  left_label,
 						  right_label);
 
 			// search to see if we find new edges.
 			for (right = 0; right < size_; ++right) {
 				if (!right_ismatched[right]
-<<<<<<< HEAD
 						&& weight_label_diff[right] == 0) {
 					if (matched_on_left_[right] == kUnexist) {
 						// right vertex is not matched with left vertex
 						// we find an augmenting path
 						left = weight_label_diff_left_vertex[right];
-=======
-						&& cost_label_diff[right] == 0) {
-					if (matched_on_left_[right] == kUnexist) {
-						// right vertex is not matched with left vertex
-						// we find an augmenting path
-						left = cost_label_diff_left_vertex[right];
->>>>>>> d5a84022a01f3993039b9144be693add1eecbda1
 						is_augmenting_path_found = true;
 						break;
 					}
@@ -355,22 +250,13 @@ void max_assignment::do_augment(std::vector<bool>& left_ismatched,
 					// been added in BFS)
 					if (!left_ismatched[matched_on_left_[right]]) {
 						add_edge_to_equality_graph(matched_on_left_[right],
-<<<<<<< HEAD
 												   weight_label_diff_left_vertex[right],
-=======
-												   cost_label_diff_left_vertex[right],
->>>>>>> d5a84022a01f3993039b9144be693add1eecbda1
 												   left_label,
 												   right_label,
 												   left_ismatched,
 												   prev_left,
-<<<<<<< HEAD
 												   weight_label_diff,
 												   weight_label_diff_left_vertex);
-=======
-												   cost_label_diff,
-												   cost_label_diff_left_vertex);
->>>>>>> d5a84022a01f3993039b9144be693add1eecbda1
 						q.push(matched_on_left_[right]);
 					}
 				}
@@ -401,13 +287,8 @@ void max_assignment::do_augment(std::vector<bool>& left_ismatched,
 		do_augment(left_ismatched,
 				   right_ismatched,
 				   prev_left,
-<<<<<<< HEAD
 				   weight_label_diff,
 				   weight_label_diff_left_vertex,
-=======
-				   cost_label_diff,
-				   cost_label_diff_left_vertex,
->>>>>>> d5a84022a01f3993039b9144be693add1eecbda1
 				   matched_size,
 				   left_label,
 				   right_label);
@@ -421,29 +302,17 @@ void max_assignment::weighted_hungary_routine() {
 	/** the label values of vertices on the right */
 	std::vector<int> right_label;
 
-<<<<<<< HEAD
 	// left labels are initialized with max weight
-=======
-	// left labels are initialized with max cost
->>>>>>> d5a84022a01f3993039b9144be693add1eecbda1
 	// among all outgoing edges
 	// right labels are initialized with 0
 	left_label.reserve(size_);
 	right_label.reserve(size_);
 	for (int i = 0; i < size_; ++i) {
-<<<<<<< HEAD
 		int maxweight = 0;
 		for (int j = 0; j < size_; ++j) {
 			maxweight = std::max(maxweight, weight_[i][j]);
 		}
 		left_label.push_back(maxweight);
-=======
-		int maxcost = 0;
-		for (int j = 0; j < size_; ++j) {
-			maxcost = std::max(maxcost, cost_[i][j]);
-		}
-		left_label.push_back(maxcost);
->>>>>>> d5a84022a01f3993039b9144be693add1eecbda1
 		right_label.push_back(0);
 	}
 
@@ -461,16 +330,11 @@ void max_assignment::weighted_hungary_routine() {
 		right_ismatched.push_back(false);
 	}
 
-<<<<<<< HEAD
 	/** the difference between label value sum and weight
-=======
-	/** the difference between label value sum and cost
->>>>>>> d5a84022a01f3993039b9144be693add1eecbda1
 	 * of an edge. Helper vector in improving look-up
 	 * speed in finding minimum difference among edges.
 	 * Indexed by right vertex of the edge
 	 */
-<<<<<<< HEAD
 	std::vector<int> weight_label_diff;
 
 	/** the corresponding left vertices of weight_label_diff_*/
@@ -480,17 +344,6 @@ void max_assignment::weighted_hungary_routine() {
 	for (int right = 0; right < size_; ++right) {
 		weight_label_diff.push_back(0);
 		weight_label_diff_left_vertex.push_back(0);
-=======
-	std::vector<int> cost_label_diff;
-
-	/** the corresponding left vertices of cost_label_diff_*/
-	std::vector<int> cost_label_diff_left_vertex;
-
-	// initialize cost_label_diff_
-	for (int right = 0; right < size_; ++right) {
-		cost_label_diff.push_back(0);
-		cost_label_diff_left_vertex.push_back(0);
->>>>>>> d5a84022a01f3993039b9144be693add1eecbda1
 	}
 
 	/** the previous left vertex of current left vertex
@@ -509,13 +362,8 @@ void max_assignment::weighted_hungary_routine() {
 	do_augment(left_ismatched,
 			   right_ismatched,
 			   prev_left,
-<<<<<<< HEAD
 			   weight_label_diff,
 			   weight_label_diff_left_vertex,
-=======
-			   cost_label_diff,
-			   cost_label_diff_left_vertex,
->>>>>>> d5a84022a01f3993039b9144be693add1eecbda1
 			   matched_size,
 			   left_label,
 			   right_label);

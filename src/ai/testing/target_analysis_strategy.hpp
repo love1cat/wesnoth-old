@@ -32,23 +32,13 @@ class aspect_attacks;
 
 class target_analysis_strategy : public analysis_strategy {
 public:
-<<<<<<< HEAD
 	virtual boost::shared_ptr<attacks_vector> analyze_targets_impl() const = 0;
-=======
-	virtual boost::shared_ptr<attacks_vector> analyze_targets_impl(const aspect_attacks& asp_atks) const = 0;
->>>>>>> d5a84022a01f3993039b9144be693add1eecbda1
 };
 
 class target_analysis_strategy1 : public target_analysis_strategy {
 public:
-<<<<<<< HEAD
 	target_analysis_strategy1(const config& cfg, const aspect_attacks *aspect_attacks_ptr);
 	virtual boost::shared_ptr<attacks_vector> analyze_targets_impl() const;
-=======
-	target_analysis_strategy1(const config& cfg);
-	virtual boost::shared_ptr<attacks_vector> analyze_targets_impl(const aspect_attacks& asp_atks) const;
-
->>>>>>> d5a84022a01f3993039b9144be693add1eecbda1
 protected:
 	virtual double rate_terrain(const unit& u, const map_location& loc) const;
 
@@ -61,28 +51,17 @@ protected:
 									const move_map& enemy_dstsrc,
 									const map_location* tiles,
 									const team& current_team,
-<<<<<<< HEAD
-=======
-									const readonly_context* ai_ptr,
->>>>>>> d5a84022a01f3993039b9144be693add1eecbda1
 									bool* used_locations,
 									std::vector<map_location>& units,
 									std::vector<attack_analysis>& result,
 									attack_analysis& cur_analysis) const;
 
 	virtual void set_default_attack_analysis_strategy(const config& target_anaysis_strategy_config);
-<<<<<<< HEAD
 	virtual double power_projection(const std::vector<map_location>& locs, const move_map& dstsrc) const;
 
 	config target_analysis_strategy_cfg_;
 	config attack_analysis_strategy_cfg_;
 	const aspect_attacks * aspect_attacks_ptr_;
-=======
-	virtual double power_projection(const readonly_context* ai_ptr, const std::vector<map_location>& locs, const move_map& dstsrc) const;
-
-	config target_analysis_strategy_cfg_;
-	config attack_analysis_strategy_cfg_;
->>>>>>> d5a84022a01f3993039b9144be693add1eecbda1
 };
 
 } // end of namespace testing_ai_default
