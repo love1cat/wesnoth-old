@@ -27,7 +27,6 @@
 #include "../../unit.hpp"
 #include "aspect_attacks.hpp"
 
-
 #include "multi_power_projection.hpp"
 #include "max_weight_match.hpp"
 

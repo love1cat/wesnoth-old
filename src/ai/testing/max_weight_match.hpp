@@ -119,6 +119,7 @@ private:
 	 * used to map matched right vertex given left vertex
 	 */
 	std::vector<int> matched_on_right_;
+
 	/** number of vertices in the half of bipartite graph */
 	int size_;
 	
