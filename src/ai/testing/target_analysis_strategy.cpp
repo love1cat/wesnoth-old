@@ -42,9 +42,10 @@ static lg::log_domain log_ai_testing_aspect_attacks("ai/aspect/attacks");
 #define ERR_AI LOG_STREAM(err, log_ai_testing_aspect_attacks)
 
 // terrain_analysis_strategy1 constructor, set default bonus values here
-target_analysis_strategy1::target_analysis_strategy1(const config& cfg)
+target_analysis_strategy1::target_analysis_strategy1(const config& cfg, const aspect_attacks *aspect_attacks_ptr)
 	: target_analysis_strategy_cfg_(cfg)
-	, attack_analysis_strategy_cfg_() {
+	, attack_analysis_strategy_cfg_()
+	, aspect_attacks_ptr_(aspect_attacks_ptr){
 	set_id("target_analysis_strategy1");
 	set_default_attack_analysis_strategy(target_analysis_strategy_cfg_);
 }
@@ -57,19 +58,19 @@ void target_analysis_strategy1::set_default_attack_analysis_strategy(const confi
 	attack_analysis_strategy_cfg_.child_or_add("attack_analysis_strategy")["name"]="strategy1";
 }
 
-boost::shared_ptr<attacks_vector> target_analysis_strategy1::analyze_targets_impl(const aspect_attacks& asp_atks) const {
-	const move_map& srcdst = asp_atks.get_srcdst();
-	const move_map& dstsrc = asp_atks.get_dstsrc();
-	const move_map& enemy_srcdst = asp_atks.get_enemy_srcdst();
-	const move_map& enemy_dstsrc = asp_atks.get_enemy_dstsrc();
+boost::shared_ptr<attacks_vector> target_analysis_strategy1::analyze_targets_impl() const {
+	const move_map& srcdst = aspect_attacks_ptr_->get_srcdst();
+	const move_map& dstsrc = aspect_attacks_ptr_->get_dstsrc();
+	const move_map& enemy_srcdst = aspect_attacks_ptr_->get_enemy_srcdst();
+	const move_map& enemy_dstsrc = aspect_attacks_ptr_->get_enemy_dstsrc();
 
 	boost::shared_ptr<attacks_vector> res(new attacks_vector());
 	unit_map& units_ = *resources::units;
 
 	std::vector<map_location> unit_locs;
 	for(unit_map::const_iterator i = units_.begin(); i != units_.end(); ++i) {
-		if (i->side() == asp_atks.get_side() && i->attacks_left() && !(i->can_recruit() && asp_atks.get_passive_leader())) {
-			if (!i->matches_filter(vconfig(asp_atks.get_filter_own()), i->get_location())) {
+		if (i->side() == aspect_attacks_ptr_->get_side() && i->attacks_left() && !(i->can_recruit() && aspect_attacks_ptr_->get_passive_leader())) {
+			if (!i->matches_filter(vconfig(aspect_attacks_ptr_->get_filter_own()), i->get_location())) {
 				continue;
 			}
 			unit_locs.push_back(i->get_location());
@@ -81,16 +82,16 @@ boost::shared_ptr<attacks_vector> target_analysis_strategy1::analyze_targets_imp
 
 	moves_map dummy_moves;
 	move_map fullmove_srcdst, fullmove_dstsrc;
-	asp_atks.calculate_possible_moves(dummy_moves,fullmove_srcdst,fullmove_dstsrc,false,true);
+	aspect_attacks_ptr_->calculate_possible_moves(dummy_moves,fullmove_srcdst,fullmove_dstsrc,false,true);
 
-	asp_atks.unit_stats_cache().clear();
+	aspect_attacks_ptr_->unit_stats_cache().clear();
 
 	for(unit_map::const_iterator j = units_.begin(); j != units_.end(); ++j) {
 		// Attack anyone who is on the enemy side,
 		// and who is not invisible or petrified.
-		if (asp_atks.current_team().is_enemy(j->side()) && !j->incapacitated() &&
+		if (aspect_attacks_ptr_->current_team().is_enemy(j->side()) && !j->incapacitated() &&
 				!j->invisible(j->get_location())) {
-			if (!j->matches_filter(vconfig(asp_atks.get_filter_enemy()), j->get_location())) {
+			if (!j->matches_filter(vconfig(aspect_attacks_ptr_->get_filter_enemy()), j->get_location())) {
 				continue;
 			}
 			map_location adjacent[6];
@@ -105,7 +106,7 @@ boost::shared_ptr<attacks_vector> target_analysis_strategy1::analyze_targets_imp
 			analysis.support = 0.0;
 			do_attack_analysis(j->get_location(), srcdst, dstsrc,
 							   fullmove_srcdst, fullmove_dstsrc, enemy_srcdst, enemy_dstsrc,
-							   adjacent,asp_atks.current_team(), &asp_atks, used_locations,unit_locs,*res,analysis);
+							   adjacent,aspect_attacks_ptr_->current_team(), used_locations,unit_locs,*res,analysis);
 		}
 	}
 	return res;
@@ -118,7 +119,6 @@ void target_analysis_strategy1::do_attack_analysis(
 	const move_map& enemy_srcdst, const move_map& enemy_dstsrc,
 	const map_location* tiles,
 	const team& current_team,
-	const readonly_context* ai_ptr,
 	bool* used_locations,
 	std::vector<map_location>& units,
 	std::vector<attack_analysis>& result,
@@ -286,10 +286,10 @@ void target_analysis_strategy1::do_attack_analysis(
 
 			// Find out how vulnerable we are to attack from enemy units in this hex.
 			//FIXME: suokko's r29531 multiplied this by a constant 1.5. ?
-			const double vulnerability = ai_ptr->power_projection(tiles[j],enemy_dstsrc);//?
+			const double vulnerability = aspect_attacks_ptr_->power_projection(tiles[j],enemy_dstsrc);//?
 
 			// Calculate how much support we have on this hex from allies.
-			const double support = ai_ptr->power_projection(tiles[j], fullmove_dstsrc);//?
+			const double support = aspect_attacks_ptr_->power_projection(tiles[j], fullmove_dstsrc);//?
 
 			// If this is a position with equal defense to another position,
 			// but more vulnerability then we don't want to use it.
@@ -329,12 +329,13 @@ void target_analysis_strategy1::do_attack_analysis(
 			cur_analysis.support += best_support;
 
 			cur_analysis.is_surrounded = is_surrounded;
-			cur_analysis.analyze(map_, units_, *ai_ptr, dstsrc, srcdst, enemy_dstsrc, ai_ptr->get_aggression());
+
+			cur_analysis.analyze(map_, units_, *aspect_attacks_ptr_, dstsrc, srcdst, enemy_dstsrc, aspect_attacks_ptr_->get_aggression());
 			result.push_back(cur_analysis);
 			used_locations[cur_position] = true;
 			do_attack_analysis(loc,srcdst,dstsrc,fullmove_srcdst,fullmove_dstsrc,enemy_srcdst,enemy_dstsrc,
-							   tiles, current_team, ai_ptr, used_locations,
-							   units,result,cur_analysis);
+							   tiles, current_team, used_locations, units,result,cur_analysis);
+
 			used_locations[cur_position] = false;
 
 
@@ -348,8 +349,8 @@ void target_analysis_strategy1::do_attack_analysis(
 	}
 }
 
-double target_analysis_strategy1::power_projection(const readonly_context* ai_ptr, const std::vector<map_location>& locs, const move_map& dstsrc) const {
-	return ai_ptr->power_projection(locs[0], dstsrc);
+double target_analysis_strategy1::power_projection(const std::vector<map_location>& locs, const move_map& dstsrc) const {
+	return aspect_attacks_ptr_->power_projection(locs[0], dstsrc);
 }
 
 double target_analysis_strategy1::rate_terrain(const unit& u, const map_location& loc) const {
