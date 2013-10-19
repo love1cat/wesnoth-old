@@ -27,7 +27,7 @@ namespace ai {
 
 namespace testing_ai_default {
 
-// analysis strategy component for default strategy pointer operations
+// Analysis strategy component for default strategy pointer operations.
 template<class T>
 class analysis_strategy_component {
 public:
@@ -49,6 +49,8 @@ public:
 			set_strategy_error_handling();
 		}
 	}
+	
+	// Return curent strategy. May return NULL.
 	virtual const strategy_ptr& get_current_strategy() const {
 		return concrete_strategy_ptr_;
 	}
@@ -59,7 +61,7 @@ private:
 	mutable strategy_ptr concrete_strategy_ptr_;
 };
 
-// analysis strategy base class definitions
+// Analysis strategy base class definitions.
 class analysis_strategy {
 public:
 	analysis_strategy() : analysis_strategy_id_("undefined") {}
